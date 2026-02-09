@@ -1,0 +1,99 @@
+mitienda/
+├── index.php              ← login
+├── dashboard.php          ← menú principal
+├── tpv.php                ← punto de venta
+├── productos.php          ← gestión de productos
+├── informes.php           ← informes de ventas
+├── login.php              ← procesa login
+├── logout.php             ← cierra sesión
+├── guardar_producto.php   ← guarda productos nuevos
+├── css/
+│   └── estilos.css
+├── js/
+│   └── tpv.js
+└── includes/
+    └── conexion.php       ← conexión a la base de datos
+
+
+AVANCE ACTUAL:
+ya tengo la siguiente estructura:
+src:
+    |_____css
+         |_____styles.css
+    |_____images
+         |_____LOGO_HORIZONTAL
+    |_____includes
+         |_____conexion.php (conexion con bbdd de mysql en phpmyadmin)
+	 |_____venta.php
+	 |_____almacen.php
+	 |_____informes.php
+	 |_____configuración.php
+    |_____dashboard.php (menú principal)
+    |_____index.php (index/login)
+    |_____login.php(scripts de login)
+    |_____logout.php (scripts de logout)
+
+
+---------------------------------------------------------------
+---------------------------------------------------------------
+
+TABLAS EN XAMPP (MYSQL)::
+
+Empleadas: 
+	· id: -INT UNSIGNED NOTNULL  PRIMARYKEY AUTOINCREMENT ID_único
+	· nombre: VARCHAR 100 NOTNULL Nombre_completo
+	· usuario: VARCHAR 50 NOTNULL Nombre_de_usuario_para_login
+	· contraseña: VARCHAR 50 NOTNULL En_texto_planO_o_encriptado
+
+
+Productos:
+	· id: INT NOTNULL PRIMARYKEY AUTOINCREMENT 
+	· nombre: VARCHAR 100 NOTNULL
+	· categoría: VARCHAR 50 NOTNULL
+	· precio: DECIMAL 10,2 NOTNULL
+	· stock: INT NOTNULL
+
+
+Ventas:
+	· id: INT NOTNULL PRIMARYKEY ID_de_venta
+	· id_empleada: INT NOTNULL FOREIGNKEY--> (empleadas.id)
+	· fecha: DATETIME NOTNULL Fecha/hora_venta
+	· total: DECIMAL 10,2 NOTNULL Precio _total _venta
+
+
+
+Detalle_ventas:
+	· id: INT NOTNULL PRIMARYKEY AUTO_INCREMENT 
+	· id_venta: INT NOTNULL FOREIGNKEY --> (ventas.id)
+	· id_producto: INT NOTNULL FOREIGNKEY--> (productos.id)
+	· Cantidad: INT NOTNULL Cantidad_vendida
+	· Subtotal: DECIMAL 10,2 NOTNULL  precio_*_cantidad
+
+empresa:
+	· id: INT NOTNULL PRIMARYKEY AUTO_INCREMENT id_empresa
+	· nombre: VARCHAR(50)	nombre_empresa	
+	· cif:	VARCHAR(50)	cif_empresa	
+	· teléfono: INT (50)	teléfono_empresa
+	· email	VARCHAR(50)	email_empresa
+
+
+
+--------------------------------------------------------------
+--------------------------------------------------------------
+
+
+
+
+
+INDEX (LOGIN ? .php) --> DASHBOARD (MENU PRINCIPAL DE 3 BOTONES .php)
+			|		|		| 
+			|		|		|
+			TPV(.php)	ALMACEN(.php)	INFORMES(.php)
+					|
+			________________|_________________
+			|		|		 |
+			|		|		 |
+		    historial	  entrada/salida    hacer stock
+
+
+

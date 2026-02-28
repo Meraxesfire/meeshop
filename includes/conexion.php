@@ -3,7 +3,7 @@
 $host = "localhost";
 $usuario = "root";
 $contraseña="";
-$base_datos ="meeshop";
+$base_datos ="meeshop_test";
 
 $conn = new mysqli($host,$usuario,$contraseña,$base_datos);
 

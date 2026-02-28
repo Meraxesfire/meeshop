@@ -1,16 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Punto de venta</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://use.typekit.net/tui1luo.css">
 </head>
 <body>
-
     <div>
         <h1 class="titulo">Punto de venta</h1>
     </div>
@@ -32,12 +29,16 @@
                     <button class="categoria catfinal">Zapatos</button>
                 </div>
             </div>
+<div class="zonaProductosFiltrados">
+<p class="tituloFiltrado"></p>
+
+<!--Aquí se agregan de forma dinámica todos los elementos de la tabla Productos filtrados segun su columna categoría: -->
+</div>
         </div>
-
-
         <div class ="espacio2">
-            <p>Calculadora</p>
+            <p>Venta</p>
         </div>
     </div>
 </body>
 </html>
+

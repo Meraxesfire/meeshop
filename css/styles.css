@@ -1,549 +1,1093 @@
 .body_index{
+
     background-image: url('../images/wallpaper.jpg');
+
     background-size: cover;
+
     background-position: center;
+
     background-repeat: no-repeat;
+
     background-attachment: fixed;
+
     display:flex;
+
     flex-direction: column;
+
     align-items: center;
+
     max-height: 100%;
+
     font-family: "ivyepic-variable", sans-serif;
+
     font-variation-settings: "slnt" 0, "wght" 0;
+
     font-weight: bold;
+
 }
+
+
 
 .logo_login{
+
     max-width: 85vh;
+
 }
+
+
 
 .nombre_empleada{
+
     color:rgb(255, 255, 255);
 
+
+
 }
+
 /*.logo_nombre{
 
+
+
     font-family: "ivyepic-variable", sans-serif;
+
     font-variation-settings: "slnt" 0, "wght" 100, "wdth" 100;
+
     font-weight: 100;
+
     font-size: 50px;
+
 }*/
 
+
+
 .mensaje_empresa{
+
     font-size:20px;
+
     font-family: "ivyepic-variable", sans-serif;
+
     font-size: 30px;
+
     margin-top:60px;
+
 }
+
+
 
 .entrada{
+
     width:50vh;
+
     background-color: rgba(249, 217, 144,0.5);
+
     border:none;
+
     border-radius: 20px;
+
     height: 4vh;
+
     margin: 4px;
+
     padding: 5px 15px;
+
 }
+
+
 
 .submit{
+
     align-self: center;
+
     border-radius: 20px;
+
     background-color:hsl(42, 100%, 43%);
+
     border: none;
+
     padding:5px 15px;
+
     color:white;
+
 }
 
+
+
 .formulario{
+
     width: 50vh;
+
     justify-items: center;
+
     padding: 10px;
+
     display:flex;
+
     flex-direction:column; 
+
 }
+
+
+
+
 
 
 
 /*----------DASHBOARD----------*/
+
 .logo_menu{
+
     width: 80%;
+
     height: 80%;
+
     object-fit: contain;
+
     margin-top:-10px;
+
 }
+
+
 
 .body_dashboard{
+
     background-image: url('../images/wallpaper.jpg');
+
     background-size: cover;
+
     background-position: center;
+
     background-repeat: no-repeat;
+
     background-attachment: fixed;
-    display:flex;
+
+display:flex;
+
     margin:0;
+
     padding:0;
+
 }
+
+
 
 .mensaje_bienvenida{
+
     font-family: calibri;
+
     color: white;
+
     font-size:40px;
-    margin-left: 1em;
+
+    align-items:center;
+
 }
+
+
 
 .menu_bienvenida{
+
     background-color: rgba(91, 88, 88, 0.242);
+
     height:100vh;
+
     max-width: 12%;
+
+min-width:180px;
+
     width: 12%;
+
     display:flex;
+
     flex-direction: column;
+
     align-items: center;
+
     padding-top: 20px;
+
     min-width: 10em ;
+
     position:fixed;
+
     left:0;
+
     top:0;
+
     bottom:0;
+
     box-sizing:border-box;
+
 }
+
+
 
 .option{
+
     background-color: rgba(200, 20, 71, 0.7);
+
     font-size: 18px;
+
     color:rgb(255, 255, 255);
+
     font-family: "swiss-721-bt-rounded",sans-serif;
+
     font-weight: 700;
+
     font-style: normal;
+
     padding: 2em 2em;
+
     margin:15px 15px;
+
     text-align:center;
+
     width:80%;
+
     min-width: 80%;
+
     height: 15%;
+
     /*border-top: 2px solid rgba(255, 209, 224, 0.7);
+
     border-left: 2px solid rgba(255, 209, 224, 0.7);
+
     border-right: 2px solid rgba(255, 209, 224, 0.7);
+
     border-bottom:2px solid rgba(255, 209, 224, 0.7);*/
+
     border: 0px;
+
     display:flex;
+
     justify-content:center;
+
     align-items:center;
+
     border-radius:20px;
+
     flex-shrink: 0;/* Evita que los botones se encojan */
+
 }
 
+
+
 .option:hover {
+
     background-color: rgba(97, 15, 41, 0.7); /* Color de fondo al pasar el mouse */
+
     border-color: rgba(97, 15, 41, 0.7);
+
     transform: translateY(-2px); /* Efecto de elevación opcional */
+
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra opcional */
+
 }
+
+
+
+
 
 
 
 .logout{
+
   margin-top: auto;
+
   margin-bottom: 10px;
+
   display: flex;
+
   justify-content: center;
+
   align-items: center;
+
   
+
   /* Controla el tamaño del formulario */
+
   width: fit-content;
+
   height: fit-content;
+
   margin-left: auto;
+
   margin-right: auto;
+
 }
+
+
 
 .logout-btn {
+
   justify-self: center;
+
     align-content: center;
+
     width:fit-content;
+
     height: fit-content;
+
   margin-bottom: 30px;
+
   margin-top: 30px;
+
   background: none;
+
   border: none;
+
   font-size: 24px;
+
   color: #830404;
+
   cursor: pointer;
+
   padding: 10px;
+
   border-radius: 5px;
+
   transition: color 0.3s ease;
+
   position: relative;
+
 }
+
+
 
 .logout-btn:hover {
+
   color: #ffb300;
+
   background-color: rgba(71, 38, 76, 0.366);
+
 }
+
+
 
 /*data-tooltip*/
+
 .logout-btn::before {
+
   content: attr(data-tooltip);
+
   position: absolute;
+
   bottom: 100%;
+
   left: 50%;
+
   transform: translateX(-50%);
+
   background-color: rgba(71, 38, 76, 0.366);
+
   color: white;
+
   padding: 6px 10px;
+
   border-radius: 4px;
+
   font-size: 12px;
+
   white-space: nowrap;
+
   opacity: 0;
+
   visibility: hidden;
+
   transition: opacity 0.3s, visibility 0.3s;
+
   margin-bottom: 5px;
+
   z-index: 1000;
+
 }
+
+
 
 /* Flecha del tooltip */
+
 .logout-btn::after {
+
   content: "";
+
   position: absolute;
+
   bottom: 100%;
+
   left: 50%;
+
   transform: translateX(-50%);
+
   border: 5px solid transparent;
+
   border-top-color: rgba(71, 38, 76, 0);
+
   opacity: 0;
+
   visibility: hidden;
+
   transition: opacity 0.3s, visibility 0.3s;
+
   z-index: 1000;
+
 }
+
+
 
 /* Mostrar tooltip al hacer hover */
+
 .logout-btn:hover::before,
+
 .logout-btn:hover::after {
-    z-index: 9999 !important;
+
+   z-index: 9999 !important;
+
   opacity: 1;
+
   visibility: visible;
+
 }
 
+
+
 /*-------------PAGINAS DASHBOARD--------------------------------------------------*/
+
 .texto_menu{
+
     font-family: "new-atten-round", sans-serif;
+
     font-weight: 400;
+
     font-style: normal;
+
     font-size: 25px;
+
     color:rgb(67, 67, 65);
+
     margin-bottom: 20px;
+
     margin-top: 20px;
+
 }
+
+
 
 .contenido_dashboard{
 
-    width: calc(100% - 11%);;/* Para completar el 100% con el menú */
-    margin-left:11%;
+    width: calc(100% - 10%);/* Para completar el 100% con el menú */
+
     box-sizing:border-box;
+
     height: 100%; /* o el alto que desees */
+
     margin-top:0;
+
     position: fixed;
+
     overflow-y: auto; /*permite scroll vertical si es necesario*/
+
+flex-wrap:wrap;
+
+margin-left:11.1%;
+
+flex:1;
+
+
 }
+
+
+
 
 
 .titulo{
+
     font-family: "ivyepic-variable", sans-serif;
+
     font-variation-settings: "slnt" 0, "wght" 100, "wdth" 100;
+
     font-weight: bold;
+
     color: rgb(67, 67, 65);
+
     font-size: 55px;
+
     padding: 20px 20px 25px 50px;
+
     margin-left: 1%;
+
     margin-right: 1%;
+
     margin-top:22px;
+
     margin-bottom: 0;
+
     padding-top: 0;
+
     /*border-radius:20px;    
+
     border-bottom: 3px solid rgba(0,0,0,0.1);
+
     border-right: 3px solid rgba(0,0,0,0.1);
 
+
+
     background-color: rgba(62, 2, 82, 0.404);
+
     background-size: 100% 50%;
+
     background-repeat: no-repeat;
+
     background-position: top, bottom;*/
+
 }
+
+
 
 /*-------------PAGINA VENTA-------------*/
+
 .contenido_venta{
+
     display:flex;
+
     align-items: center;
+
     justify-content: center;
+
     height: 100%;
+
     width: 100%;
+
     justify-items:stretch;
+
     align-items:start;
+
 }
+
+
 
 .espacio1{
+
     background-color: rgba(255, 255, 255, 0.393);
-    margin-left: 1%;
+
     height: 100vh;
+
     font-family: "new-atten-round", sans-serif;
+
     font-size: 30px;
+
     color:rgb(67, 67, 65);
+
     display:flex;
+
     flex-direction: column;
+
+margin-left:1%;
+
+width: 40%;
+
 }
+
+
 
 .tituloBuscar{
+
     margin-bottom: 5px;
+
     margin-top: 15px;
+
     margin-left: 5px;
+
     display:inline;
+
     font-size:35px;
-}
 
-/*.botonBuscarProductos{
-    background-color: rgba(243, 166, 12, 0.7);
-    border-radius: 20px;
-    border: none;
-    padding: 8px;
-    margin-top: 2px;
 }
 
 
-.fondoBoton{
-    background-color: rgba(241, 43, 125, 0.7);
-    border-radius: 50px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width:30px;
-    height: 30px;
-}*/
+
+
 
 .contenedorInputLupa {
+
     display:flex;
+
     width: 100%;
+
     max-width: 600px;
+
     margin-left: 5px;
+
     margin-top: 8px;
+
 }
+
+
 
 .iconoLupa{
 
+
+
     font-size: 20px;
+
     background-color: rgba(241, 43, 69, 0.7);
+
     padding: 7px;
+
     border-radius: 50px;
+
     color: white;
+
     cursor: pointer;
+
 }
+
 .botonLupa{
+
     background: none;
+
     border: none;
+
     cursor:pointer;
+
     
+
 }
+
+
 
 .busquedaProductos{
+
 margin-left: 10px;
+
 display:block;
+
 }
+
+
 
 .caja_busqueda{
+
     display:flex;
+
     background-color: rgba(241, 43, 69, 0.7);
+
     border-radius: 20px;
+
     border: none;
+
     padding: 5px 40px;
+
     color:rgb(255, 250, 250);
+
     font-family: "new-atten-round", sans-serif;
+
     font-size: 20px;
+
     outline: none;
+
 }
 
+
+
 .caja_busqueda::placeholder{
+
     color:rgba(243, 158, 194, 0.7) ;
+
 }
+
+
+
 
 
 .menuProductos{
+
     margin-left: 10px;
+
 }
+
+
 
 .burbujas_productos{
+
     display:flex;
+
     gap: 0;
+
     padding:0;
+
     border-radius: 20px;
 
+min-width:50px;
+
+
+
 }
+
 .categoria{
+
     background-color: rgba(241, 43, 69, 0.7);
+
     border: none;
+
     padding: 30px 5px;
+
     color:rgb(255, 250, 250);
+
     margin: 0;
+
     font-size: 20px;
+
     font-family: "new-atten-round", sans-serif;
+
     font-weight: 700;
+
     font-style: normal;
+
     text-align: center;
+
     width: 100%;
+
     min-width: 60px;
+
 }
+
     .categoria:hover{
+
         background-color: rgba(150, 7, 28, 0.7);
+
 }
+
 .catinicial{
+
     border-radius: 20px 0 0 20px;
+
 }
+
 .catfinal{
+
     border-radius: 0 20px 20px 0;
+
 }
+
+
+
 
 
 .espacio2{
+
     background-color: rgba(255, 255, 255, 0.393);
+
     width: 50%;
+
     height: 100vh;
+
     font-family: "new-atten-round", sans-serif;
+
     font-style: normal;
+
     font-size:30px;
+
     color:rgb(67, 67, 65);
+
     display:flex;
+
     flex:1; 
+
     flex-direction: column;
+
     justify-content: start;
+
     align-items:center;
+
 }
-/*.calculadora{
-    background-color: rgba(255, 255, 255, 0.393);
-    width: 20%;
-    height: 80%;
-    margin-bottom: 40px;
-    font-family: "new-atten-round", sans-serif;
-    color:rgb(67, 67, 65);
-    font-style: normal;
-    font-size: 30px;
-    flex:1;
-    display:flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
 
 
-}*/
+
+
 
 /*-------------PAGINA ALMACEN-------------*/
 
 
+
+
+
 #cajaBusqueda{
+
     display:flex;
+
     align-items: center;
+
 }
 
+
+
 .caja_busqueda{
+
     max-width: 25%;
+
 }
+
+
+
 
 
 .tituloAlmacen{
+
     font-size: 25px;
+
     text-align: center;
+
     color: rgb(255, 255, 255);
+
     background-color: rgba(219, 145, 0, 0.7);
+
     border-radius: 40px;;
+
 }
 
-#tablaStock{
-    background-color: rgba(241, 43, 69, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-}   
+.primeraFilaTabla{
+
+margin-right:15px;
+
+}
+
+
+
+.cuerpoTabla tr{
+
+background-color: rgba(255,255,255,0.5);
+
+
+
+}
+
+
 
 .espacio3{
+
     margin-left: 1%;  
+
     background-color: rgba(255, 255, 255, 0.393);
+
     font-family: "new-atten-round", sans-serif;
+
     font-size: 16px;
+
     height: 50vh;
+
     color:rgb(67, 67, 65);
-    display:flex;
-    flex-direction: column;    
-    padding:15px;
+
+    display:flex-start;
+
+    flex-direction: column;  
+
+padding-left:15px;
+
     justify-content: center;
-    padding-top:0;
+
+    padding-top:5px;
+
+flex:1 1 300px;
+
+min-width:300px;
+
+
+
 }
 
-/*#contenido_almacen{
-    margin-left: 50px;
-    background-color: rgba(255, 255, 255, 0.393);
-    height: 100vh;
-    font-family: "new-atten-round", sans-serif;
-    font-size: 30px;
-    color:rgb(67, 67, 65);
-    display:flex;
-    flex-direction: column;
-}*/
+
+
+.cuerpoTabla{
+
+background-color:rgba (255,255,255,);
+
+}
+
+
+
+
 
 .contenido_almacen{
+
     background-color: rgba(255, 255, 255, 0.393);
+
     font-family: "new-atten-round", sans-serif;
+
     font-size: 16px;
+
     color:rgb(67, 67, 65);
+
     display:flex;
+
     flex-direction: column;
+
     padding: 20px;
+
     height: 100%;
+
 }
+
+
 
 .tituloAgregar{
+
     margin-bottom: 10px;
+
     font-size: 30px;
+
 }
+
 .entradaAgregar{
+
     width: 300px;
+
     height: 30px;
+
     border-radius: 15px;
+
     border: none;
+
     padding: 5px 10px;
+
     margin: 5px;
+
 }
+
+
 
 .tabla_almacen {
+
     width: 100%;
+
     text-align: center;
+
 }
+
+
 
 .tabla_almacen th {
+
     text-align: center;
+
 }
+
+
 
 .itemAlmacen {
+
     align-items: center;
+
 }
+
+
 
 .submitAgregar {
+
     align-self: center;
+
     border-radius: 20px;
+
     background-color: #db9100; /* Un color similar al que tenías */
+
     border: none;
+
     padding: 10px 25px; /* Un poco más de aire */
+
     color: white;
+
     margin-top: 15px;
+
     cursor: pointer; /* Indispensable para que parezca un botón */
+
     font-family: "new-atten-round", sans-serif;
+
     font-weight: bold;
+
     transition: background-color 0.3s ease;
+
 }
+
+
 
 .submitAgregar:hover {
+
     background-color: #b37700; /* Efecto al pasar el ratón */
+
 }
 
+
+/* Estilos para los campos editables de almacen TRAS PINCHAR en boton editar */
+
+.celda-editable {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 5px;
+
+}
+
+
+
+.texto-editable {
+
+    flex: 1;
+
+    padding: 3px;
+
+}
+
+
+
+.texto-editable.editando {
+
+    background-color: #fff3cd;
+
+    border-radius: 3px;
+
+    outline: none;
+
+}
+
+
+
 .botonEditar {
-    background-color: transparent;
+
+    background: transparent;
+
     border: none;
+
     cursor: pointer;
+
     color: #db9100;
-    max-width: 30px;
-    max-height: 30px;}
+
+    font-size: 12px;
+
+    padding: 2px 5px;
+
+    opacity: 0.7;
+
+    transition: opacity 0.3s;
+
+}
+
+
+
+.botonEditar:hover {
+
+    opacity: 1;
+
+}
+
+.caja_busqueda_editable{
+
+background-color:rgba(200, 20, 71, 0.7);
+
+border:none;
+
+color:white;
+
+padding:3px;
+
+}

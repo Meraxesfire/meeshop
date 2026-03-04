@@ -113,27 +113,26 @@ $resultado = $conn->query($sql);
                         <?php echo number_format($pvp, 2, ',', '.') . ' €'; ?>
                     </td>
                 </tr>
-<!-- ----------------------------------VOY POR AQUI, ARREGLAR QUE CAMBIE EL PRECIO PVP SI EDITO EL IVA INLINE ------------------->
 
         <?php endwhile; ?>
     </tbody>
     </table>
         </div>
-        <div class="espacio3" style="padding-right:25px;">
+        <div class="espacio4" style="padding-right:25px;">
             <h2 class="tituloAgregar">Agregar nuevo producto</h2>
-            <form class="formAgregarProducto" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST"><!--Envío la información con POST que es el indicado para escritura en la bbdd -->
-                <input class="entradaAgregar" type="text" name="ean" placeholder=" EAN" required>
-                <input class="entradaAgregar" type="text" name="nombre" placeholder=" Nombre del producto">
-                <select class="entradaAgregar" type="text" name="categoria" placeholder=" Categoria">
+            <form class="formAgregarProducto parent" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST"><!--Envío la información con POST que es el indicado para escritura en la bbdd -->
+                <input class="entradaAgregar child" type="text" name="ean" placeholder=" EAN" required>
+                <input class="entradaAgregar child" type="text" name="nombre" placeholder=" Nombre del producto">
+                <input class="entradaAgregar child" type="number" step="0.01" name="precio" placeholder=" Precio">
+                <input class="entradaAgregar child" type="number" name="iva" placeholder="IVA en %" required>
+                <input class="entradaAgregar child" type="number" name="stock" placeholder="Cantidad" required>
+                <select class="entradaAgregar child" type="text" name="categoria" placeholder=" Categoria">
                     <option value="ropa">Ropa</option>
                     <option value="accesorios">Accesorios</option>
                     <option value="joyeria">Joyería</option>
                     <option value="zapatos">Zapatos</option>
                 </select><br>
-                <input class="entradaAgregar" type="number" step="0.01" name="precio" placeholder=" Precio">
-                <input class="entradaAgregar" type="number" name="stock" placeholder="Cantidad" required><br>
-                <input class="entradaAgregar" type="number" name="iva" placeholder="IVA en %" required><br>
-                <button class="submitAgregar" type="submit">Agregar producto</button>
+                <button class="submitAgregar child" type="submit">Agregar producto</button>
             </form>
         </div>
     </div>

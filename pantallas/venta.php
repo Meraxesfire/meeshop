@@ -21,8 +21,8 @@
                 </div>
             </div>
             <div class="menuProductos">
-                <p>Productos</p>
-                <div class="burbujas_productos"> <!--  titulo + 4 clases (ropa, accesorios, alimentos, bebidas ,etc) -->
+                <p class="tituloProductos">Productos</p>
+                <div class="burbujas_productos">
                     <button class="categoria catinicial">Ropa</button>
                     <button class="categoria">Accesorios</button>
                     <button class="categoria">Joyería</button>

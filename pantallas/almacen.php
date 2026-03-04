@@ -2,6 +2,8 @@
 
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED); // Desactiva NOTICE, WARNING y DEPRECATED
 require_once __DIR__ . '/../includes/conexion.php';
+//LOGICA DE FILTRADO de elementos en la tabla -----------------------------------------------------------------------------
+//primero: buscar si hay algun en el input y el select de filtrado
 
 
 
@@ -12,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && !empty($_POST)) {
         $categoria =$_POST['categoria'] ?? '';
         $precio = isset($_POST['precio']) ? floatval($_POST['precio']) : 0;
         $stock_nuevo = isset($_POST['stock']) ? intval($_POST['stock']) : 0;
-$iva = isset($_POST['iva']) ? floatval($_POST['iva']) : 21;
+        $iva = isset($_POST['iva']) ? floatval($_POST['iva']) : 21;
         //las variables de arriba recogen los datos del formulario de agregar producto
 
         //ahora la consulta para insertar el nuevo producto en la base de datos
@@ -25,8 +27,8 @@ $iva = isset($_POST['iva']) ? floatval($_POST['iva']) : 21;
                 $stmt->bind_param("sssdid", $ean, $nombre, $categoria, $precio, $stock_nuevo, $iva);//con bind_param evitamos inyecciones SQL porquen estipulamos los tipos de datos que vamos a recibir en cada campo: s=string, d=double, i=integer. tambien vincula las variables a los marcadores de posición ? del prepare.
                 if ($stmt->execute()) { 
                     $stmt->close();
-                // IMPORTANTE: Si es una petición AJAX, detenemos la ejecución aquí
-                // para que no intente redirigir.
+                // IMPORTANTE: Si es una petición AJAX, detenemos la ejecución aquí para que no intente redirigir.
+
                 if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
                     exit('success');
                 }
@@ -83,52 +85,34 @@ $resultado = $conn->query($sql);
                 $ivaPorcentaje=isset($row['iva']) ? floatval($row['iva']) : 0;
                 $pvp = $pvo*(1+ ($ivaPorcentaje/100));
                 ?>
-
-                    <tr>
-                        <td style="text-align:center;font-size:15px"><?php echo isset($row['EAN']) ? htmlspecialchars(substr($row['EAN'], 0, 16)) : '-'; ?></td>
-                        <td class="datoEditable" data-id="<?php echo $row['id']?>" data-columna="nombre" style="text-align:left;font-size:15px"><!--Los atributos "data-*" son atributos personalizados de HTML5 -->
-                            <button class="botonEditar" data-tooltip="Editar">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <span class="texto-editable"><?php echo isset($row['nombre']) ? htmlspecialchars($row['nombre']):'-'?></span>
-                        </td>
-
-                        <td class="datoEditable" data-id="<?php echo $row['id'];?>"data-columna="categoria" style="text-align:left;font-size:15px">
-
-                            <button class="botonEditar" data-tooltip="Editar">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <span class="texto-editable"><?php echo isset($row['categoria']) ? htmlspecialchars($row['categoria']):'-'?></span>
-                        </td>
-
-                        <td class="datoEditable" data-id="<?php echo $row['precio']?>" data-columna="precio" style="text-align:left;font-size:15px">
-
-                                <button class="botonEditar" data-tooltip="Editar">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                                </button>
-                                <span class="texto-editable"><?php echo $row['precio']?htmlspecialchars($row['precio']):'-'?></span>
-                                </td>
-                        <td><?php echo isset($row['stock']) ? $row['stock'] : '-'; ?></td> 
-
-
-                        <td class="datoEditable" step="0.01" data-id="<?php echo $row['iva']?>" data-columna="iva" style="text-align:left;font-size:15px">
-                                <button class="botonEditar" data-tooltip="Editar">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                                </button>
-                                <span class="texto-editable" ><?php echo $row['iva']?htmlspecialchars($row['iva']) : '-' ?></span>
-                        </td>
-
-
-                        <td class="datoEditable" data-id="<?php echo $row['pvp'] ?>" data-columna="pvp" style="text-align:left;font-size:15px">
-
-                                <button class="botonEditar" data-tooltip="Editar">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                                </button>
-                                <span class="texto-editable">
-                                <?php echo ($pvp > 0) ? number_format($pvp, 2, ',', '.') . ' €' : '-'; ?>
-                                </span>
-                        </td>
-                    </tr>
+                <tr>
+                    <td style="text-align:center;font-size:15px">
+                        <?php echo isset($row['EAN']) ? htmlspecialchars($row['EAN']) : '-'; ?>
+                    </td>
+                    
+                    <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="nombre">
+                        <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <span class="texto-editable"><?php echo htmlspecialchars($row['nombre']); ?></span>
+                    </td>
+                    
+                    <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="categoria">
+                        <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <span class="texto-editable"><?php echo htmlspecialchars($row['categoria']); ?></span>
+                    </td>
+                    
+                    <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="precio">
+                        <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <span class="texto-editable"><?php echo number_format($pvo, 2, '.', ''); ?></span>
+                    </td>
+                    
+                    <td><?php echo $row['stock']; ?></td> 
+                    
+                    <td><?php echo $row['iva']; ?>%</td>
+                    
+                    <td>
+                        <?php echo number_format($pvp, 2, ',', '.') . ' €'; ?>
+                    </td>
+                </tr>
 <!-- ----------------------------------VOY POR AQUI, ARREGLAR QUE CAMBIE EL PRECIO PVP SI EDITO EL IVA INLINE ------------------->
 
         <?php endwhile; ?>

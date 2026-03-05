@@ -483,6 +483,9 @@ display:block;
     text-align: center;
 	max-height: 100%;
 }
+.tabla_almacen_overflow{
+    overflow-y: auto;
+}
 
 .tabla_almacen th {
     text-align: center;

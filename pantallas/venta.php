@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="menuProductos">
-                <p class="tituloProductos">Productos</p>
+                <p class="tituloproductos">Productos</p>
                 <div class="burbujas_productos">
                     <button class="categoria catinicial">Ropa</button>
                     <button class="categoria">Accesorios</button>

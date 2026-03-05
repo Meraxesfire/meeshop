@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="https://use.typekit.net/tui1luo.css">
 </head>
 <body>
-
-        <h1 class="titulo">Informes</h1>
-
+    <h1 class="titulo">Informes</h1>
 </body>
 </html>

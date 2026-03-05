@@ -65,58 +65,59 @@ $resultado = $conn->query($sql);
                 <input class="caja_busqueda" id="buscarProducto" name="busqueda" placeholder="Nombre del producto"></input>
                 <button class="botonLupa" data-tooltip="Buscar"><i class="fa-solid fa-magnifying-glass iconoLupa"></i></button>
             </div>
-            <table class="tabla_almacen">
-                <thead class="cabeceraTabla">
-                    <tr id="primeraFilaTabla">
-                        <th class="tituloAlmacen">EAN</th>
-                        <th class="tituloAlmacen">Productos</th>
-                        <th class="tituloAlmacen">Categoría</th>
-                        <th class="tituloAlmacen">PVO</th>
-                        <th class="tituloAlmacen">Stock</th>
-                        <th class="tituloAlmacen">IVA</th>
-                        <th class="tituloAlmacen">PVP</th>
+            <div class="tabla_almacen_overflow">
+                <table class="tabla_almacen">
+                    <thead class="cabeceraTabla">
+                        <tr id="primeraFilaTabla">
+                            <th class="tituloAlmacen">EAN</th>
+                            <th class="tituloAlmacen">Productos</th>
+                            <th class="tituloAlmacen">Categoría</th>
+                            <th class="tituloAlmacen">PVO</th>
+                            <th class="tituloAlmacen">Stock</th>
+                            <th class="tituloAlmacen">IVA</th>
+                            <th class="tituloAlmacen">PVP</th>
+                        </tr>
+                    </thead>
+                    <tbody class="cuerpoTabla">
+    <!--A CONTINUACION INSERCION DE DATOS DE BBDD en filas dentro del cuerpo de la tabla, les doy estilo inline para asegurar el ajuste -->
+                    <?php
+                    while($row = $resultado->fetch_assoc()): //<----------este pequeño fragmento calcula el iva para el pvp final
+                    $pvo=isset($row['precio']) ? floatval($row['precio']) :0;
+                    $ivaPorcentaje=isset($row['iva']) ? floatval($row['iva']) : 0;
+                    $pvp = $pvo*(1+ ($ivaPorcentaje/100));
+                    ?>
+                    <tr>
+                        <td style="text-align:center;font-size:15px">
+                            <?php echo isset($row['EAN']) ? htmlspecialchars($row['EAN']) : '-'; ?>
+                        </td>
+                        
+                        <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="nombre">
+                            <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <span class="texto-editable"><?php echo htmlspecialchars($row['nombre']); ?></span>
+                        </td>
+                        
+                        <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="categoria">
+                            <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <span class="texto-editable"><?php echo htmlspecialchars($row['categoria']); ?></span>
+                        </td>
+                        
+                        <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="precio">
+                            <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <span class="texto-editable"><?php echo number_format($pvo, 2, '.', ''); ?></span>
+                        </td>
+                        
+                        <td><?php echo $row['stock']; ?></td> 
+                        
+                        <td><?php echo $row['iva']; ?>%</td>
+                        
+                        <td>
+                            <?php echo number_format($pvp, 2, ',', '.') . ' €'; ?>
+                        </td>
                     </tr>
-                </thead>
-                <tbody class="cuerpoTabla">
-<!--A CONTINUACION INSERCION DE DATOS DE BBDD en filas dentro del cuerpo de la tabla, les doy estilo inline para asegurar el ajuste -->
-                <?php
-                while($row = $resultado->fetch_assoc()): //<----------este pequeño fragmento calcula el iva para el pvp final
-                $pvo=isset($row['precio']) ? floatval($row['precio']) :0;
-                $ivaPorcentaje=isset($row['iva']) ? floatval($row['iva']) : 0;
-                $pvp = $pvo*(1+ ($ivaPorcentaje/100));
-                ?>
-                <tr>
-                    <td style="text-align:center;font-size:15px">
-                        <?php echo isset($row['EAN']) ? htmlspecialchars($row['EAN']) : '-'; ?>
-                    </td>
-                    
-                    <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="nombre">
-                        <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <span class="texto-editable"><?php echo htmlspecialchars($row['nombre']); ?></span>
-                    </td>
-                    
-                    <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="categoria">
-                        <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <span class="texto-editable"><?php echo htmlspecialchars($row['categoria']); ?></span>
-                    </td>
-                    
-                    <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="precio">
-                        <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <span class="texto-editable"><?php echo number_format($pvo, 2, '.', ''); ?></span>
-                    </td>
-                    
-                    <td><?php echo $row['stock']; ?></td> 
-                    
-                    <td><?php echo $row['iva']; ?>%</td>
-                    
-                    <td>
-                        <?php echo number_format($pvp, 2, ',', '.') . ' €'; ?>
-                    </td>
-                </tr>
-
-        <?php endwhile; ?>
-    </tbody>
-    </table>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>   
         </div>
         <div class="espacio4" style="padding-right:25px;">
             <h2 class="tituloAgregar">Agregar nuevo producto</h2>

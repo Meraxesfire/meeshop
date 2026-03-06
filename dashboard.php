@@ -55,15 +55,46 @@ document.querySelectorAll('.option').forEach(btn => {
 });
 
 //----------------------------------------- LOGICA PARA PANTALLA ALMACEN------------------------------------------------------------------------------
-//LOGICA DE FILTRO DE PALABRAS, EAN Y CATEGORIA.
+/*LOGICA DE FILTRO DE PALABRAS, EAN Y CATEGORIA.--
+En Dashboard recibe el codigo de ejecución de la query que está en almacen.php y procesa el html desde aqui     
+A CONTINUACION: CODIGO JS PARA QUE EL FILTRADO DE LA TABLA SE REALICE CON FETCH (AJAX) Y SEA DINAMICO SINN RECARGAR TODA LA PÁGINA
+Para ello eliminamos el 'method' y el 'action' del formulario que hace submit al filtrado de datos y añadimos "addEventListener"
+al boton submit del filtrado y le asignamos una función para hacer más limpio el codigo html -*/ 
     
+document.getElementById('contenido').addEventListener('submit', function(e) {
+    // 1. Log de control: ¿Entra el evento al contenedor?
+    console.log("Evento submit detectado en el contenedor.");
+    
+    // 2. Averiguar si: ¿Es el formulario que buscamos?
+    if (e.target && e.target.id === 'formDeFiltro') {
+        e.preventDefault();
+        console.log("Formulario de filtro interceptado.");
+
+        const datos = new FormData(e.target);
+        // 3. Ver qué estamos enviando
+        for (let [key, value] of datos.entries()) {
+        }
+        fetch('pantallas/filtro_productos.php', { //usamos fetch para es
+            method: 'POST',
+            body: datos
+        })
+        .then(res => {
+            return res.text();
+        })
+        .then(html => {
+            const tabla = document.querySelector('.cuerpoTabla');
+            if (tabla) {
+                tabla.innerHTML = html;
+            } else {
+                console.error("No se encontró .cuerpoTabla");
+            }
+        })
+        .catch(err => console.error("Error", err));
+    }
+});
 
 
-
-
-
-
-// RECARGAR la pantalla del almacén (usada al terminar de editar los datos con la funcion de edicion)
+// RECARGAR la pantalla del almacén (usada al terminar de editar los datos con la funcion de edicion inline de los productos registrados)
 function recargarPantallaAlmacen() {
     fetch('pantallas/almacen.php')
         .then(res => res.text())

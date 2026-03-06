@@ -407,6 +407,17 @@ display:block;
     max-width: 25%;
 }
 
+.select_busqueda{
+    display:flex;
+    background-color: rgba(241, 43, 69, 0.7);
+    border-radius: 20px;
+    border: none;
+    padding: 5px 40px;
+    color:rgb(255, 250, 250);
+    font-family: "new-atten-round", sans-serif;
+    font-size: 20px;
+    outline: none;
+}
 
 .tituloAlmacen{
     font-size: 25px;

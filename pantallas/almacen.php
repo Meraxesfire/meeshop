@@ -1,8 +1,6 @@
 <?php 
-
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED); // Desactiva NOTICE, WARNING y DEPRECATED
 require_once __DIR__ . '/../includes/conexion.php';
-
 
 //AQUI SE CAPTURAN LOS DATOS (VALORES) DEL FORMULARIO DEL ALMACEN: Crea la logica para meter los productos en la bdd a traves del formulario de esta misma pagina almacen.php
 if ($_SERVER['REQUEST_METHOD']==='POST' && !empty($_POST)) {
@@ -32,29 +30,17 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && !empty($_POST)) {
             } 
         }
 }
+        //para evitar crasheo
+        $sql_inicial = "SELECT * FROM productos";
+        $resultado = $conn->query($sql_inicial); 
 
-
-//CONSULTA DE PRODUCTOS Y FILTRO POR NOMBRE, EAN Y CATEGORIA----------
-
-// 1. Empezamos con la base (esta sirve para TODO: con o sin filtro)
-$sql = "SELECT * FROM productos WHERE 1=1";
-
-// 2. Si hay algo por GET (búsqueda), añadimos las piezas al puzzle
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // Filtro por EAN o Nombre (asumiendo que quieres buscar en ambos)
-    if (!empty($_GET['busquedaInput'])) {
-        $busqueda = $conn->real_escape_string($_GET['busquedaInput']);
-        $sql .= " AND (ean LIKE '%$busqueda%' OR nombre LIKE '%$busqueda%')";
-    }
-    // Filtro por Categoría
-    if (!empty($_GET['busquedaSelect'])) {
-        $cat = $conn->real_escape_string($_GET['busquedaSelect']);
-        $sql .= " AND categoria = '$cat'";
-    }
-}
-// 3. UNA SOLA EJECUCIÓN. Aquí se lanza la frase final (sea corta o larga)
-$resultado = $conn->query($sql);
+        // Si la consulta falla por algo, creamos un objeto vacío para que el while no explote
+        if (!$resultado) {
+            $resultado = new stdClass(); 
+        }
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -72,12 +58,18 @@ $resultado = $conn->query($sql);
     </div>
     <div>
         <div class="espacio3">
-            <form method="GET" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+            <form id="formDeFiltro">
             <label for="buscarProducto" class="tituloBuscar">Buscar producto</label>
             <div id="cajaBusqueda">
                 <input class="caja_busqueda" id="buscarProducto" type="text" name="busquedaInput" placeholder="Nombre del producto"></input>
-                <select class="select_busqueda" id="buscarCategoria" name="busquedaSelect"></select>
-                <button class="botonLupa" id="botonLupa" data-tooltip="Buscar"><i class="fa-solid fa-magnifying-glass iconoLupa"></i></button>
+                <select class="select_busqueda" id="buscarCategoria" name="busquedaSelect">
+                    <option value="" disabled selected hidden>Elige una categoría de filtro</option> <!--"disabled selected hidden" hace que aparezca como un placeholder-->
+                    <option value="ropa">Ropa</option>
+                    <option value="accesorios">Accesorios</option>
+                    <option value="joyeria">Joyería</option>
+                    <option value="zapatos">Zapatos</option>
+                </select>
+                <button class="botonLupa" id="botonLupa" data-tooltip="Buscar" type="submit"><i class="fa-solid fa-magnifying-glass iconoLupa"></i></button>
             </div>
             </form>
             <div class="tabla_almacen_overflow">

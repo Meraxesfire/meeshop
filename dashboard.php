@@ -56,7 +56,7 @@ document.querySelectorAll('.option').forEach(btn => {
 
 //----------------------------------------- LOGICA PARA PANTALLA ALMACEN------------------------------------------------------------------------------
 //LOGICA DE FILTRO DE PALABRAS, EAN Y CATEGORIA.
-
+    
 
 
 
@@ -77,7 +77,6 @@ function recargarPantallaAlmacen() {
 /*Este codigo se crea AQUI y no en almacen.php porque JS hace que el navegador busque en el momento de ejecución y al cargar la pagina almacen no está activa primeramente por defecto.
 ponerlo en el dashboard.php hace que el listenner esté atento a cuando cargue almacen.php en el dashboard.
 Uso addEventListener en 'contenido' porque no existe pantalla cargada por defecto al cargar la página*/
-
 
 document.getElementById('contenido').addEventListener('submit', function(e) {
     // Verificamos si lo que se envió fue el formulario de agregar producto

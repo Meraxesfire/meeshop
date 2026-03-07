@@ -94,7 +94,7 @@ $resultado = $conn->query($sql_inicial);
                             <style>
                                 /* Esto quita las flechitas del navegador incluso si Tailwind falla */
                                 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-                                input[type=number] { -moz-appearance: textfield; }
+                                input[type=number] {-moz-appearance: textfield;}
                             </style>
                             </td>
                     </tr>

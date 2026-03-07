@@ -406,6 +406,13 @@ display:block;
     padding:8px;
 }
 
+.zonaProductosFiltrados::-webkit-scrollbar{
+  background: #c02563;
+}
+.zonaProductosFiltrados::-webkit-scrollbar-thumb{
+  background: #8c1145;
+}
+
 .tituloAlmacenVentas{
     font-size: 20px;
     text-align: center;

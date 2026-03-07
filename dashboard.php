@@ -37,10 +37,18 @@ $empleada=$_SESSION['empleada'];
 </body>
 </html>
 
-<!-------------------------------LOGICA DE CARGA DE PANTALLAS PARA hacer  una SPA (Sigle Page App)----------------------------------------------------------------------------
+<!-------------------------------LOGICA DE CARGA DE PANTALLAS PARA hacer  una SPA (Sigle Page App)---------------------------------------------------------------------------->
+<!--CARGAR POR DEFECTO LA PAGINA DE VENTA.PHP-->
+<script>
+        fetch('pantallas/venta.php') //por defecto deja cargada la pagina de venta al iniciar sesion.
+            .then(res => res.text())
+            .then(html =>{
+                document.getElementById('contenido').innerHTML = html;
+            });
+</script>
 
-El siguiente script es para cargar el contenido de las 
-pantallas(opciones/botones)del menu en el espacio del div llamado "contenido".  -->
+<!-- El siguiente script es para cargar el contenido de las  
+pantallas(opciones/botones)del menu en el espacio del div llamado "contenido".-->
 
 <script> /*ESTO ES JS: hace que cada boton se identifique con una pantalla a cargar en el div #contenido*/
 document.querySelectorAll('.option').forEach(btn => {

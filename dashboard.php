@@ -61,6 +61,17 @@ document.querySelectorAll('.option').forEach(btn => {
             });
     });
 });
+//----------------------------------------- LOGICA PARA PANTALLA VENTA -----------------------------------------------------------------------------
+
+//MOSTRAR PRODUCTOS SEGUN FILTRO Y SEGUN BUSQUEDA:
+
+
+
+
+
+
+
+
 
 //----------------------------------------- LOGICA PARA PANTALLA ALMACEN------------------------------------------------------------------------------
 /*LOGICA DE FILTRO DE PALABRAS, EAN Y CATEGORIA.--

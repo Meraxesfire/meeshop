@@ -88,10 +88,10 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && !empty($_POST)) {
                     <tbody class="cuerpoTabla">
     <!--A CONTINUACION INSERCION DE DATOS DE BBDD en filas dentro del cuerpo de la tabla, les doy estilo inline para asegurar el ajuste -->
                     <?php
-                    while($row = $resultado->fetch_assoc()): //<----------este pequeño fragmento calcula el iva para el pvp final
+                    while($row = $resultado->fetch_assoc()): 
                     $pvo=isset($row['precio']) ? floatval($row['precio']) :0;
                     $ivaPorcentaje=isset($row['iva']) ? floatval($row['iva']) : 0;
-                    $pvp = $pvo*(1+ ($ivaPorcentaje/100));
+                    $pvp = $pvo*(1+ ($ivaPorcentaje/100));         //este pequeño fragmento calcula el iva para el pvp final
                     ?>
                     <tr>
                         <td style="text-align:center;font-size:15px">

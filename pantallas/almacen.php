@@ -1,7 +1,8 @@
 <?php 
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED); // Desactiva NOTICE, WARNING y DEPRECATED
 require_once __DIR__ . '/../includes/conexion.php';
-
+?>
+<?php
 //AQUI SE CAPTURAN LOS DATOS (VALORES) DEL FORMULARIO DEL ALMACEN: Crea la logica para meter los productos en la bdd a traves del formulario de esta misma pagina almacen.php
 if ($_SERVER['REQUEST_METHOD']==='POST' && !empty($_POST)) {
         $ean = $_POST['ean'] ??''; // Verifica que existe antes de acceder
@@ -38,6 +39,17 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && !empty($_POST)) {
         if (!$resultado) {
             $resultado = new stdClass(); 
         }
+?>
+
+<?php
+session_start();
+//Si no hay sesión activa, redirige al login:
+if (!isset($_SESSION['empleada'])){
+    header("location:index.php");
+    exit();
+}
+
+$empleada=$_SESSION['empleada'];
 ?>
 
 
@@ -144,5 +156,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && !empty($_POST)) {
             </form>
         </div>
     </div>
+
+    <script src="javascript/ventas.js"></script>
 </body>
 </html>

@@ -4,6 +4,16 @@ require_once __DIR__.'/../includes/conexion.php';
 $sql_inicial = "SELECT * FROM productos";
 $resultado = $conn->query($sql_inicial); 
 ?>
+<?php
+session_start();
+//Si no hay sesión activa, redirige al login:
+if (!isset($_SESSION['empleada'])){
+    header("location:index.php");
+    exit();
+}
+
+$empleada=$_SESSION['empleada'];
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -109,16 +119,6 @@ $resultado = $conn->query($sql_inicial);
             <p>Venta</p>
         </div>
     </div>
-
-
-<script> //forzar a tailwind para que no se equivoque y cargue antes que la pagina dinamica (pantallaX.php)
-  tailwind.config = {
-    theme: {
-      extend: {}
-    }
-  }
-</script>
-
 
 
 </body>

@@ -407,7 +407,7 @@ display:block;
 }
 
 .zonaProductosFiltrados::-webkit-scrollbar{
-  background: #c02563;
+  background: #bb1e5d;
 }
 .zonaProductosFiltrados::-webkit-scrollbar-thumb{
   background: #8c1145;
@@ -422,6 +422,16 @@ display:block;
 }
 .datoEditableVentas{
     font-size:16px;
+    background-color:rgba(255,255,255,0.2);
+    padding:0px;
+    align-items:center;
+    justify-content:center;
+    border-radius: 5px;
+    gap:0;
+}
+
+.celdaNueva{
+    font-size:12px;
     background-color:rgba(255,255,255,0.2);
     padding:0px;
     align-items:center;

@@ -30,97 +30,87 @@ $empleada=$_SESSION['empleada'];
     </div>
     <div class= "contenido_venta">   
         <div class="espacio1">
-            <div class="busquedaProductos">
-                <p class="tituloBuscar">Buscar producto</p>
-                <div class="contenedorInputLupa">
-                    <input class="caja_busqueda"name="busqueda" placeholder="Nombre del producto"></input>
-                    <button class="botonLupa" data-tooltip="Buscar"><i class="fa-solid fa-magnifying-glass iconoLupa"></i></button>
+            <form id="formDeFiltroVenta">
+                <div class="busquedaProductos">
+                    <p class="tituloBuscar">Buscar producto</p>
+                    <div class="contenedorInputLupa">
+                        <input class="caja_busqueda"name="busquedaInput" placeholder="Nombre del producto"></input>
+                        <button class="botonLupa" id="botonLupa" data-tooltip="Buscar" type="submit"><i class="fa-solid fa-magnifying-glass iconoLupa"></i></button>
+                    </div>
                 </div>
-            </div>
-            <div class="menuProductos">
-                <p class="tituloproductos">Productos</p>
-                <div class="burbujas_productos">
-                    <button class="categoria catinicial">Ropa</button>
-                    <button class="categoria">Accesorios</button>
-                    <button class="categoria">Joyería</button>
-                    <button class="categoria catfinal">Zapatos</button>
+                <div class="menuProductos">
+                    <p class="tituloproductos">Productos</p>
+                    <select class="select_busqueda" id="buscarCategoria" name="busquedaSelect">
+                    <option value="" disabled selected hidden>Elige una categoría de filtro</option> <!--"disabled selected hidden" hace que aparezca como un placeholder-->
+                    <option value="ropa">Ropa</option>
+                    <option value="accesorios">Accesorios</option>
+                    <option value="joyeria">Joyería</option>
+                    <option value="zapatos">Zapatos</option>
+                    </select>
+                    <button class="botonLupa" id="botonLupa" data-tooltip="Buscar" type="submit"><i class="fa-solid fa-magnifying-glass iconoLupa"></i></button>
                 </div>
-            </div>
-<div class="zonaProductosFiltrados">
-<table>
-    <thead>
-        <tr>  
-            <th class="tituloAlmacenVentas">EAN</th>
-            <th class="tituloAlmacenVentas">Productos</th>
-            <th class="tituloAlmacenVentas">Categoría</th>
-            <th class="tituloAlmacenVentas">PVO</th>
-            <th class="tituloAlmacenVentas">Stock</th>
-            <th class="tituloAlmacenVentas">IVA</th>
-            <th class="tituloAlmacenVentas">PVP</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php //En este script se inserta dinámicamente los elementos del alamacen en la tabla
-            while($row = $resultado->fetch_assoc()): 
-                    $pvo=isset($row['precio']) ? floatval($row['precio']) :0;
-                    $ivaPorcentaje=isset($row['iva']) ? floatval($row['iva']) : 0;
-                    $pvp = $pvo*(1+ ($ivaPorcentaje/100));         //este pequeño fragmento calcula el iva para el pvp final
-                    ?>
-                    <tr class="filaVentas">
-                        <td class="datoEditableVentas">
-                            <span class="texto-editable-ventas"><?php echo isset($row['EAN']) ? htmlspecialchars($row['EAN']) : '-'; ?></span>
-                        </td>
-                        <td class="datoEditableVentas"data-id="<?php echo $row['id']; ?>" data-columna="nombre">
-                            <span class="texto-editable-ventas"><?php echo htmlspecialchars($row['nombre']); ?></span>
-                        </td>
-                        <td class="datoEditableVentas" data-id="<?php echo $row['id']; ?>" data-columna="categoria">
-                            <span class="texto-editable-ventas"><?php echo htmlspecialchars($row['categoria']); ?></span>
-                        </td>  
-                        <td class="datoEditableVentas" data-id="<?php echo $row['id']; ?>" data-columna="precio">
-                            <span class="texto-editable-ventas"><?php echo number_format($pvo, 2, '.', ''); ?></span>
-                        </td>
-                        <td class="datoEditableVentas"><?php echo $row['stock']; ?></td> 
-                        <td class="datoEditableVentas"><?php echo $row['iva']; ?>%</td>
-                        <td class="datoEditableVentas">
-                            <?php echo number_format($pvp, 2, ',', '.') . ' €'; ?>
-                        </td>
-                        <td style="padding: 5px; width: 80px;">
-                            <div style="display: flex; align-items: center; height: 25px; border: 1px solid #e2e8f0; border-radius: 4px; overflow: hidden; background: white;">
-                                <!-- Botón Menos -->
-                                <button onclick="this.nextElementSibling.stepDown()" 
-                                style="width: 25px; height: 100%; border: none; color:white; background:rgba(219, 145, 0, 0.7); color: white; cursor: pointer; display: flex; align-items: center; justify-content:center; font-weight: bold; font-size: 14px; padding: 0;">
-                                −
-                                </button>
-                                <!-- Input Numero -->
-                                <input type="number" value="1" min="0" 
-                                style="width: 30px; height: 100%; border: none; text-align: center; font-size: 12px; color: #334155; outline: none; -moz-appearance: textfield; -webkit-appearance: none; margin: 0;">
-                                <!-- Botón Más -->
-                                <button onclick="this.previousElementSibling.stepUp()" 
-                                style="width: 25px; height: 100%; border: none; color:white; background:rgba(219, 145, 0, 0.7); color: white; cursor: pointer; display: flex; align-items: center; justify-content:center; font-weight: bold; font-size: 14px; padding: 0;">
-                                +
-                                </button>
-                            </div>
+                
+            </form>
 
-                            <style>
-                                /* Esto quita las flechitas del navegador incluso si Tailwind falla */
-                                input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-                                input[type=number] {-moz-appearance: textfield;}
-                            </style>
-                            </td>
+
+            <div class="zonaProductosFiltrados">
+            <table>
+                <thead>
+                    <tr>  
+                        <th class="tituloAlmacenVentas">EAN</th>
+                        <th class="tituloAlmacenVentas">Productos</th>
+                        <th class="tituloAlmacenVentas">Categoría</th>
+                        <th class="tituloAlmacenVentas">PVO</th>
+                        <th class="tituloAlmacenVentas">Stock</th>
+                        <th class="tituloAlmacenVentas">IVA</th>
+                        <th class="tituloAlmacenVentas">PVP</th>
                     </tr>
-                        <?php endwhile; ?>
-    </tbody>
-</table>
+                </thead>
+                <tbody id="cuerpoTablaVenta">
+                    <?php //En este script se inserta dinámicamente los elementos del alamacen en la tabla
+                        while($row = $resultado->fetch_assoc()): 
+                                $pvo=isset($row['precio']) ? floatval($row['precio']) :0;
+                                $ivaPorcentaje=isset($row['iva']) ? floatval($row['iva']) : 0;
+                                $pvp = $pvo*(1+ ($ivaPorcentaje/100));         //este pequeño fragmento calcula el iva para el pvp final
+                                ?>
+                                <tr class="filaVentas">
+                                    <td class="datoEditableVentas">
+                                        <span class="texto-editable-ventas"><?php echo isset($row['EAN']) ? htmlspecialchars($row['EAN']) : '-'; ?></span>
+                                    </td>
+                                    <td class="datoEditableVentas"data-id="<?php echo $row['id']; ?>" data-columna="nombre">
+                                        <span class="texto-editable-ventas"><?php echo htmlspecialchars($row['nombre']); ?></span>
+                                    </td>
+                                    <td class="datoEditableVentas" data-id="<?php echo $row['id']; ?>" data-columna="categoria">
+                                        <span class="texto-editable-ventas"><?php echo htmlspecialchars($row['categoria']); ?></span>
+                                    </td>  
+                                    <td class="datoEditableVentas" data-id="<?php echo $row['id']; ?>" data-columna="precio">
+                                        <span class="texto-editable-ventas"><?php echo number_format($pvo, 2, '.', ''); ?></span>
+                                    </td>
+                                    <td class="datoEditableVentas"><?php echo $row['stock']; ?></td> 
+                                    <td class="datoEditableVentas"><?php echo $row['iva']; ?>%</td>
+                                    <td class="datoEditableVentas">
+                                        <?php echo number_format($pvp, 2, ',', '.') . ' €'; ?>
+                                    </td>
+                                    <td style="padding: 5px; width: 80px;">
+                                        <button style="background-color:rgba(219,145,0,0.7); border:none; color:white; padding:10px 15px; border-radius: 15px; font-size:23px;">+</button>
 
-<!--Aquí se agregan de forma dinámica todos los elementos de la tabla Productos filtrados segun su columna categoría: -->
-</div>
+                                        <style>
+                                            /* Esto quita las flechitas del navegador incluso si Tailwind falla */
+                                            input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+                                            input[type=number] {-moz-appearance: textfield;}
+                                        </style>
+                                        </td>
+                                </tr>
+                                    <?php endwhile; ?>
+                </tbody>
+            </table>
+            <!--Aquí se agregan de forma dinámica todos los elementos de la tabla Productos filtrados segun su columna categoría: -->
         </div>
+    </div>
         <div class ="espacio2">
             <p>Venta</p>
         </div>
-    </div>
-
-
+    <script src="javascript/venta.js"></script>
 </body>
 </html>
 

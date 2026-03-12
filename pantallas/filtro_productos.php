@@ -2,25 +2,26 @@
 //conectamos con archivo que conecta a la bdd
 require_once __DIR__. '/../includes/conexion.php';
 //CONSULTA DE PRODUCTOS Y FILTRO POR NOMBRE, EAN Y CATEGORIA-----------------------------------------------------
-// 1. Empezamos con la base (esta sirve para TODO: con o sin filtro)
+
+// 1) CONSULTA SQL GENERAL: esta sirve para TODO: con o sin filtro
 $sql = "SELECT * FROM productos WHERE 1=1";//1 siempre es igual a 1, esta condición siempre es verdadera. Prmite añadir más condiciones con AND de forma dinámica sin preocuparnos de si es la primera condición o no.
 
-// 2. Si hay algo por GET (búsqueda), añadimos las piezas al puzzle
+// 2) Si hay algo por POST, lo añadimos
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {//Server es un array que contiene info del servidor y la petición. REquest method busca segun el methodo de envio 
     // Filtro por EAN o Nombre (asumiendo que quieres buscar en ambos)------
-    if (!empty($_POST['busquedaInput'])) {
+    if(!empty($_POST['busquedaInput'])) {
         $busqueda = $conn->real_escape_string($_POST['busquedaInput']); //real_escape_string Limpia el texto que escribió el usuario (como comillas o caracteres raros) para evitar que un hacker inyecte código malicioso en tu base de datos (SQL Injection) 
                                                                                 //$conn es el objeto que viene de conexion.php
                                                                                 //$_POST['input']:PKP lee lo escrito por el usuario en el input
         $sql .= " AND (ean LIKE '%$busqueda%' OR nombre LIKE '%$busqueda%')";   //.= concatena condiciones gracias al 1=1 de la consulta sql original
     }                                                                           //LIKE: sql para busquedas parciales.%x% son comodines es decir busca resultados que CONTENGAN en cualquier parte la palabra entre %
-    // Filtro por Categoría-------------------------------------------------
+    // Filtro por Categoría------------------------------------------------
     if (!empty($_POST['busquedaSelect'])) {
         $cat = $conn->real_escape_string($_POST['busquedaSelect']);
         $sql .= " AND categoria = '$cat'";
     }
 }
-// 3. UNA SOLA EJECUCIÓN.
+// 3) UNA SOLA EJECUCIÓN.
 $resultado = $conn->query($sql);//query()envía la frease sql final a la bdd para ejecutarla
     if($resultado -> num_rows>0){
                

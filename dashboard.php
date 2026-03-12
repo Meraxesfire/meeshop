@@ -49,14 +49,14 @@ function cargarPantalla(nombre) { //nombre=nombre del archivo que cargará
         .then(html => {
             document.getElementById('contenido').innerHTML = html;
 
-            // Gestión del Script Dinámico
+            // Gestión del Script Dinámico porque debe cambiar con cada pantalla para que el navegador no guarde la ejecución de la pantalla anterior
             const scriptID = 'script-pantalla';
             const viejoScript = document.getElementById(scriptID);
             if (viejoScript) viejoScript.remove();
 
-            const nuevoScript = document.createElement('script');
-            nuevoScript.id = scriptID;
-            nuevoScript.src = 'javascript/' + nombre + '.js?v=' + Date.now(); // Carga desde tu nueva carpeta
+            const nuevoScript = document.createElement('script'); //crea un script en el documento que trae a la pantalla de dashboard.php
+            nuevoScript.id = scriptID;                            //sustituimos un script por otro ya que al cragar cada pantalla el navegador sigue cargando el script de la pantalla que haya estado antes
+            nuevoScript.src = 'javascript/' + nombre + '.js?v=' + Date.now(); // Al usar date.now carga siempre los milisegundos que es lo unico que asegura que sea una pagina nueva completamente evitando asi que cargue un caché y forzanmdolo a cargar una nueva pagina
             nuevoScript.type = 'text/javascript';
             document.body.appendChild(nuevoScript);
         })
@@ -64,7 +64,7 @@ function cargarPantalla(nombre) { //nombre=nombre del archivo que cargará
 }
 
 // Evento para los botones del menú
-document.querySelectorAll('.option').forEach(btn => {
+document.querySelectorAll('.option').forEach(btn => { //por cada option carga la pagina php y crea su script gracias a la funcion cargarPantalla("atributo nombre de la pantalla en cuestion que es el mismo nombre en el boton")
     btn.addEventListener('click', function() {
         cargarPantalla(this.getAttribute('name'));
     });

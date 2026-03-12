@@ -6,17 +6,12 @@ Para ello eliminamos el 'method' y el 'action' del formulario que hace submit al
 al boton submit del filtrado y le asignamos una función para hacer más limpio el codigo html -*/ 
     
 document.getElementById('contenido').addEventListener('submit', function(e) {
-    // 1. Log de control: ¿Entra el evento al contenedor?
-    console.log("Evento submit detectado en el contenedor.");
-    
-    // 2. Averiguar si: ¿Es el formulario que buscamos?
-    if (e.target && e.target.id === 'formDeFiltro') {
-        e.preventDefault();
-        console.log("Formulario de filtro interceptado.");
+   
+    if (e.target && e.target.id === 'formDeFiltro') { //Averiguar si es el formulario que buscamos (por si esta en otra pantalla o hay otro en el documento)
+        e.preventDefault(); //previene que cargue poe defecto el caché.
 
-        const datos = new FormData(e.target);
-        // 3. Ver qué estamos enviando
-        for (let [key, value] of datos.entries()) {
+        const datos = new FormData(e.target);//creamos un objeto formData que almacea los 
+        for (let [key, value] of datos.entries()) {//Aqui veo qué se está enviando gracias a entries() que pasa a array el objeto formData (propiedad-valor)
         }
         fetch('pantallas/filtro_productos.php', { //usamos fetch para es
             method: 'POST',
@@ -27,9 +22,9 @@ document.getElementById('contenido').addEventListener('submit', function(e) {
         })
         .then(html => {
             const tabla = document.querySelector('.cuerpoTabla');
-            if (tabla) {
+            if(tabla){
                 tabla.innerHTML = html;
-            } else {
+            }else{
                 console.error("No se encontró .cuerpoTabla");
             }
         })

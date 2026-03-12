@@ -157,6 +157,6 @@ $empleada=$_SESSION['empleada'];
         </div>
     </div>
 
-    <script src="javascript/ventas.js"></script>
+    <script src="javascript/almacen.js"></script>
 </body>
 </html>

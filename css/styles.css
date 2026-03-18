@@ -347,6 +347,14 @@ display:block;
     margin-top:15px;
 }
 
+.sectorFiltroVentas{
+    margin-left: 10px;
+    gap:0;
+    margin-top:15px;
+    display:flex;
+    flex-direction: row;
+}
+
 .burbujas_productos{
     display:flex;
     gap: 0;
@@ -391,7 +399,6 @@ display:block;
     flex:1; 
     flex-direction: column;
     justify-content: start;
-    align-items:center;
 }
 
 .zonaProductosFiltrados{
@@ -438,6 +445,18 @@ display:block;
     justify-content:center;
     border-radius: 5px;
     gap:0;
+}
+
+.zonaVenta{
+    background-color:rgba(241, 43, 69, 0.7);
+    max-width:40vw;
+    min-height: 65vh;
+    border-radius:40px;
+    margin-left:25px;
+}
+.tituloVenta{
+    font-size:30px;
+    margin-left:25px;
 }
 
 /*-------------PAGINA ALMACEN-------------*/

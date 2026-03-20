@@ -1,91 +1,100 @@
-//------------------------------------LOGICA PARA PANTALLA VENTAS.PHP-------------------------
+    //------------------------------------LOGICA PARA PANTALLA VENTAS.PHP-------------------------
 
-//LOGICA DE FILTRO DE INFO en la tabla de productos disponibles:
-//primero buscamos el archivo que contiene el codigo de filtrado y la tabla donde se va a volcar todo
-document.getElementById('contenido').addEventListener('submit', function (e){
-    if (e.target && e.target.id === 'formDeFiltroVenta'){
-        e.preventDefault();
-        const datos = new FormData(e.target);//objeto formData: alamacena el contenido del target del evento disparado
+    //LOGICA DE FILTRO DE INFO en la tabla de productos disponibles:
+    //primero buscamos el archivo que contiene el codigo de filtrado y la tabla donde se va a volcar todo
+    document.getElementById('contenido').addEventListener('submit', function (e){
+        if (e.target && e.target.id === 'formDeFiltroVenta'){
+            e.preventDefault();
+            const datos = new FormData(e.target);//objeto formData: alamacena el contenido del target del evento disparado
 
-        fetch('pantallas/filtro_producto_venta.php',{
-            method: 'POST',
-            body:datos
-        })
+            fetch('pantallas/filtro_producto_venta.php',{
+                method: 'POST',
+                body:datos
+            })
+            .then(res => res.text())
+            .then(html=> {
+                const tabla = document.querySelector('#cuerpoTablaVenta');
+                if(tabla){
+
+                    tabla.innerHTML = html;
+                }
+            })
+            .catch(err => console.error('Error', err));
+        }
+    });
+
+    function recargarPaginaVentas(){ //función para recargar la página al filtrarse
+        fetch('../pantallas/ventas.php')
         .then(res => res.text())
-        .then(html=> {
-            const tabla = document.querySelector('#cuerp    oTablaVenta');
-            if(tabla){
-
-                tabla.innerHTML = html;
-            }
+        .then(html => {document.querySelector('.contenido').innerHTML=html
         })
-        .catch(err => console.error('Error', err));
-    }
-});
-
-function recargarPaginaVentas(){ //función para recargar la página al filtrarse
-    fetch('../pantallas/ventas.php')
-    .then(res => res.text())
-    .then(html => {document.querySelector('.contenido').innerHTML=html
-    })
-.catch(err=>console.error('Error cargando contenido de tabla despues de filtrar'));
-}
+    .catch(err=>console.error('Error cargando contenido de tabla despues de filtrar'));
+    };
 
 
 
+    //METER PRODUCTOS EN CARRITO -----evento del botón '+' junto a linea de producto: click en boton más y se añade al carrito--------------
 
-
-//METER PRODUCTOS EN CARRITO -----evento del botón '+' junto a linea de producto: click en boton más y se añade al carrito
-
-document.addEventListener('click', function(e){//uso addEventListener porque la tabla se carga dinamicamente y no existen los botons de + por defecto.
-    if(e.target.classList.contains('botonAnadirProducto')){ //si el boton se encuentra y se pulsa....
-        var fila = e.target.closest('tr');//buscar la fila (tr) del producto deonde está el botón pulsado
-
-        var datos=[]; //aqui el array que almacenará los datos
-        var celdas = fila.querySelectorAll('td.datoEditableVentas');
-
-        for(i=0;i<celdas.length;i++){ //aquí iteramos para guardar cada elemento del producto
-            var texto = celdas[i].querySelector('.textoVentas'); //por si tiene span con texto
-            if(texto){
-                datos[i] =texto.textContent.trim(); //guarda el dato de la posicion que itera en la posicion correspondientr del array datos que he creado
-            }else{
-                datos[i] = celdas[i].textContent.trim();
+    document.addEventListener('click', function(e){
+        if(e.target.classList.contains('botonAnadirProducto')){ //busca el elemento html que sea objetivo del evento y que contenga la clase botonAnadirProducto
+            
+            var fila = e.target.closest('tr'); //guardo el tr mas cercano al elemento html que se le aplique el evento (e.target)
+            var celdas = fila.querySelectorAll('td.datoEditableVentas');//sacamos todas las celdas de cada fila y crea una NODELIST (no es array aunque usa length)
+            var datos = [];//esto será el contenedor para ir pintando lo que almacene de cada celda de fila.
+            
+            for(var i = 0; i < celdas.length; i++){ //iteración sobre cada celda (td) de cada tr para que var datos se vaya llenando y vaya pintando el valor
+                var texto = celdas[i].querySelector('.textoVentas');//textoVentas.textContent nos va a dar el valor de cada  dato
+                if(texto){
+                    datos[i] = texto.textContent.trim();//si existe el contenido, datos, almacena lo que tiene el span de la tabla(.textoVentas)
+                } else {
+                    datos[i] = celdas[i].textContent.trim();//si no existe el contenido, datos, almacena lo que tiene el td (para los casos de iva, stock y pvp)
+                }
+            }
+            
+            // Fragmento para buscar si este EAN ya esta en el carrito
+            var carrito = document.getElementById('cuerpoEspacioVenta');//buscamos el espacio en el que hay que mirar
+            var filasCarrito = carrito.querySelectorAll('tr'); //buscamos los elementos tr dentro del espacio que está pinntandolos
+            var yaEsta = false;  // esat variable es aconsejada para usar como interruptor de "encendido apagado" de la funcion, se usa si no existe lo que estamos buscando
+            
+            for(var j = 0; j < filasCarrito.length; j++){
+                var tdEAN = filasCarrito[j].querySelectorAll('td')[1];//aquí se alamacena el contenido del [1] del array de datos osea el EAN del tr que esté en el cuerpoEspacioVenta
+                
+                if(tdEAN && tdEAN.textContent.trim() === datos[0]){ //AQUI LA LOGICA PARA SABER SI ESTÁ O NO.
+                                                                    //Es importante empezar con la condicion verdadera 
+                                                                    // ya que asíno ìntamos por defecto todo. Al ejecutar primero el FOR
+                                                                    //antes que el if(!yaEsta) da la posibilidad de buscar amtes y poner el estado true al 
+                                                                    //boolean de estado, permitiendo que SI NO (!yaEsta) está se pinte la fila entera.
+                   
+                    // Si coincide la condición Sumamos 1 a la cantidad (columna 0 del nuevaFila.innerHTML que hay en la condición en negativo del if) 
+                    var tdCantidad = filasCarrito[j].querySelectorAll('td')[0];
+                    var actual = parseInt(tdCantidad.textContent) || 1;
+                    tdCantidad.textContent = actual + 1;
+                    
+                    yaEsta = true;  // Aquí usamos la variable yaesta para controlar la otra opcion de que no esté la linea que necesitamos. marcamos que sí está
+                    break;          // <- salimos del bucle, ya terminamos
+                }
+            }
+            
+            //Si NO estaba en ninguna fila, creamos la nueva
+            if(!yaEsta){ //ponemos el !yaesta despues del for para que por defecto no pinte todo ya que el valor por defecto es false.
+                var nuevaFila = document.createElement('tr');
+                nuevaFila.innerHTML = 
+                    '<td class="datoVenta">1</td>' + 
+                    '<td class="datoVenta">'+datos[0]+'</td>' +
+                    '<td class="datoVenta">'+datos[1]+'</td>' +
+                    '<td class="datoVenta">'+datos[2]+'</td>' +
+                    '<td class="datoVenta">'+datos[3]+'</td>' +
+                    '<td class="datoVenta">'+datos[5]+'</td>' +
+                    '<td class="datoVenta">'+datos[6]+'</td>' +
+                    '<td><button class="botonMenos" style="background:#dc3545;border:none;color:white;padding:5px 10px;border-radius:10px;cursor:pointer;">-</button></td>';
+                    //El ultimo elemento es un boton que tendrá la función de eliminar la fila.
+                carrito.appendChild(nuevaFila);
             }
         }
-
-        var nuevaFila = document.createElement('tr');//creo un nuevo elemento de dom en este caso un tr
-        nuevaFila.innerHTML= //Añado los elementos al tr que se va a crear
-           '<td>1</td>'+ 
-           '<td>'+datos[0]+'</td>'+
-           '<td>'+datos[1]+'</td>'+
-           '<td>'+datos[2]+'</td>'+
-           '<td>'+datos[3]+'</td>'+
-           //no pongo stock saltamos ese dato [4]
-           '<td>'+datos[5]+'</td>'+
-           '<td>'+datos[6]+'</td>'+
-           '<td><button class="botonMenos" style="background:#dc3545;border:none;color:white;padding:5px 10px;border-radius:10px;cursor:pointer;">-</button></td>'
-        //Ahora añado la fila creada al espacio de carrito
-
-        var carritoVenta = document.getElementById('cuerpoEspacioVenta');
-
-            if (carritoVenta){
-                carritoVenta.appendChild(nuevaFila);
-            }
-        }
-
-
-        //borrar producto del carrito:
-        // ========================================
-    // ELIMINAR PRODUCTO DEL CARRITO (botón -)
-    // ========================================
-    
-    // ¿Se ha pulsado un botón "-"?
-    if (e.target.classList.contains('botonMenos')) {
         
-        // Borramos la fila completa donde está el botón
-        var filaABorrar = e.target.closest('tr');
-        if (filaABorrar) {
-            filaABorrar.remove();
+        // FUNCION PARA ELIMINAR DEL CARRITO
+        if(e.target.classList.contains('botonMenos')){
+            var fila = e.target.closest('tr');
+            if(fila) fila.remove();
         }
-    }
-});
+    });

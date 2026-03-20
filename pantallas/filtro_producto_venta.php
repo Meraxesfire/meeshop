@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__.'/../includes/conexion.php'; //conecta con la bbdd
 
-$sql= "SELECT * FROM productos WHERE 1=1";//consulta sql general (1=1 permitira concatenar consultas)
+$sql= "SELECT * FROM productos WHERE 1=1";//consulta sql general (1=1 permitira concatenar consultas y asi filtrar a la vez más de una cosa)
 
 if($_SERVER['REQUEST_METHOD']=== 'POST'){//SERVER= array con info del server y la petición /(REQUEST_METHOD)
     //filtro por EAN + filtro por nombre
@@ -32,13 +32,8 @@ $resultado=$conn->query($sql);
             echo '<td class="datoEditableVentas">'.$row['stock'].'</td>';
             echo '<td class="datoEditableVentas"'.$row['iva'].'</td>';
             echo '<td class="datoEditableVentas">'.number_format($pvp, 2, ',', '.') . ' €'.'</td>';
-            echo "<td><button style='background-color:rgba(219,145,0,0.7); border:none; color:white; padding:10px 15px; border-radius: 15px; font-size:23px;'>+</button></td>";
+            echo "<td><button class='botonAnadirProducto' style='background-color:rgba(219,145,0,0.7); border:none; color:white; padding:10px 15px; border-radius: 15px; font-size:23px;'>+</button></td>";
             echo '</tr>';
-
-            //ME FALTA METER LA LOGICA DEL BOTON DE AÑADIR CANTIDAD AL ENTORNO DE VENTA (POR CREAR)
             }
-
     }
-
-
 ?>

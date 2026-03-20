@@ -8,7 +8,6 @@ $columna = $_POST['columna'] ?? '';
 $valor = $_POST['valor'] ?? '';
 
 //whitelist de columnas permitidas por seguridad
-
 $columnasPermitidas = ['nombre', 'categoria', 'precio','iva'];
 
 if (in_array($columna, $columnasPermitidas) && $id > 0) {
@@ -34,15 +33,4 @@ if (in_array($columna, $columnasPermitidas) && $id > 0) {
     echo "Columna no permitida o ID inválido";
 }
 $conn->close();
-
-
-/*------------------ESTO de abajo ES INUTIL (CREO)
-
-$sql = "UPDATE productos SET $columna = ? WHERE id = ?";
-$stmt = $conn ->prepare($sql);
-$stmt->bind_param("si", $valor, $id);
-$stmt ->execute();
-
-echo "Guardado correctamente";*/
-
 ?>

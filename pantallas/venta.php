@@ -70,7 +70,7 @@ $empleada=$_SESSION['empleada'];
                     </tr>
                 </thead>
                 <tbody id="cuerpoTablaVenta">
-                    <?php //En este script se inserta dinámicamente los elementos del alamacen en la tabla
+                    <?php //En este fragmento se inserta dinámicamente los elementos del alamacen en la tabla
                         while($row = $resultado->fetch_assoc()): 
                                 $pvo=isset($row['precio']) ? floatval($row['precio']) :0;
                                 $ivaPorcentaje=isset($row['iva']) ? floatval($row['iva']) : 0;
@@ -95,7 +95,7 @@ $empleada=$_SESSION['empleada'];
                                         <?php echo number_format($pvp, 2, ',', '.') . ' €'; ?>
                                     </td>
                                     <td style="padding: 5px; width: 80px;">
-                                        <button class="botonAnadirProducto" style="background-color:rgba(219,145,0,0.7); border:none; color:white; padding:10px 15px; border-radius: 15px; font-size:23px;">+</button>
+                                        <button id="botonSumar" class="botonAnadirProducto" style="background-color:rgba(219,145,0,0.7); border:none; color:white; padding:10px 15px; border-radius: 15px; font-size:23px;">+</button>
                                     </td>
                                 </tr>
                                     <?php endwhile; ?>               

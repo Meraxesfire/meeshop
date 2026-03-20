@@ -109,6 +109,7 @@ $empleada=$_SESSION['empleada'];
             <div class="zonaVenta">
                 <table class="espacioVenta">
                     <thead>
+                        <tr class="titulosDeAlmacen">
                         <th class="tituloAlmacenVentas">Cantidad</th>
                         <th class="tituloAlmacenVentas">EAN</th>
                         <th class="tituloAlmacenVentas">Productos</th>
@@ -116,6 +117,7 @@ $empleada=$_SESSION['empleada'];
                         <th class="tituloAlmacenVentas">PVO</th>
                         <th class="tituloAlmacenVentas">IVA</th>
                         <th class="tituloAlmacenVentas">PVP</th>
+                        </tr>
                     </thead>
                     <tbody id="cuerpoEspacioVenta">
                         <tr>

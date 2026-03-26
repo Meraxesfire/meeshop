@@ -1,12 +1,12 @@
 <?php
 session_start();
 //Si no hay sesión activa, redirige al login:
-if (!isset($_SESSION['empleada'])){
+if (!isset($_SESSION['empleada'])) {
     header("location:index.php");
     exit();
 }
 
-$empleada=$_SESSION['empleada'];
+$empleada = $_SESSION['empleada'];
 ?>
 
 

@@ -1,18 +1,19 @@
 <?php
 //conexion con la bdd
-require_once __DIR__.'/../includes/conexion.php';
+require_once __DIR__ . '/../includes/conexion.php';
 $sql_inicial = "SELECT * FROM productos";
-$resultado = $conn->query($sql_inicial); 
+$resultado = $conn->query($sql_inicial);
+
 ?>
 <?php
 session_start();
 //Si no hay sesión activa, redirige al login:
-if (!isset($_SESSION['empleada'])){
+if (!isset($_SESSION['empleada'])) {
     header("location:index.php");
     exit();
 }
 
-$empleada=$_SESSION['empleada'];
+$empleada = $_SESSION['empleada'];
 ?>
 
 <!DOCTYPE html>
@@ -71,11 +72,11 @@ $empleada=$_SESSION['empleada'];
                 </thead>
                 <tbody id="cuerpoTablaVenta">
                     <?php //En este fragmento se inserta dinámicamente los elementos del alamacen en la tabla
-                        while($row = $resultado->fetch_assoc()): 
-                                $pvo=isset($row['precio']) ? floatval($row['precio']) :0;
-                                $ivaPorcentaje=isset($row['iva']) ? floatval($row['iva']) : 0;
-                                $pvp = $pvo*(1+ ($ivaPorcentaje/100));         //este pequeño fragmento calcula el iva para el pvp final
-                                ?>
+while ($row = $resultado->fetch_assoc()): //La tabla de almacen la dejo en este php y no en el js porque necesito que la cargue mas inmediatamente y de forma mas segura.
+    $pvo = isset($row['precio']) ? floatval($row['precio']) : 0;
+    $ivaPorcentaje = isset($row['iva']) ? floatval($row['iva']) : 0;
+    $pvp = $pvo * (1 + ($ivaPorcentaje / 100)); //este pequeño fragmento calcula el iva para el pvp final
+?>
                                 <tr class="filaVentas">
                                     <td class="datoEditableVentas">
                                         <span class="textoVentas"><?php echo isset($row['EAN']) ? htmlspecialchars($row['EAN']) : '-'; ?></span>
@@ -98,17 +99,17 @@ $empleada=$_SESSION['empleada'];
                                         <button id="botonSumar" class="botonAnadirProducto" style="background-color:rgba(219,145,0,0.7); border:none; color:white; padding:10px 15px; border-radius: 15px; font-size:23px;">+</button>
                                     </td>
                                 </tr>
-                                    <?php endwhile; ?>               
+                                    <?php
+endwhile; ?>               
                 </tbody>
             </table>
-            <!--Aquí se agregan de forma dinámica todos los elementos de la tabla Productos filtrados segun su columna categoría: -->
         </div>
     </div>
         <div class ="espacio2"> 
             <p class="tituloVenta">Venta</p>
             <div class="zonaVenta">
                 <table class="espacioVenta">
-                    <thead>
+                   <thead>
                         <tr class="titulosDeAlmacen">
                         <th class="tituloAlmacenVentas">Cantidad</th>
                         <th class="tituloAlmacenVentas">EAN</th>
@@ -120,17 +121,9 @@ $empleada=$_SESSION['empleada'];
                         </tr>
                     </thead>
                     <tbody id="cuerpoEspacioVenta">
-                        <tr>
-                            <td> 
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-
                     </tbody>
                 </table>
             </div>
         </div>
-    <script src="javascript/venta.js"></script>
 </body>
     </html>

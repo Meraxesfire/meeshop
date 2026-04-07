@@ -2,7 +2,7 @@
 
 //LOGICA DE FILTRO DE INFO en la tabla de productos disponibles:
 //primero buscamos el archivo que contiene el codigo de filtrado y la tabla donde se va a volcar todo
-document.getElementById('contenido').addEventListener('submit', function (e) {
+document.getElementById('formDeFiltroVenta').addEventListener('submit', function (e) {
     if (e.target && e.target.id === 'formDeFiltroVenta') {
         e.preventDefault();
         const datos = new FormData(e.target);//objeto formData: alamacena el contenido del target del evento disparado
@@ -15,7 +15,6 @@ document.getElementById('contenido').addEventListener('submit', function (e) {
             .then(html => {
                 const tabla = document.querySelector('#cuerpoTablaVenta');
                 if (tabla) {
-
                     tabla.innerHTML = html;
                 }
             })
@@ -67,8 +66,8 @@ if (contenedorVenta) { //si existe el contenedor.
                 var tdEAN = filasCarrito[j].querySelectorAll('td')[1];//aquí se alamacena el contenido del [1] del array de datos osea el EAN del tr que esté en el cuerpoEspacioVenta
 
                 if (tdEAN && tdEAN.textContent.trim() === datos[0]) { //AQUI LA LOGICA PARA SABER SI ESTÁ O NO.
-                    //Es importante empezar con la condicion verdadera 
-                    // ya que asíno ìntamos por defecto todo. Al ejecutar primero el FOR
+                    //Empezar con la condicion verdadera 
+                    // ya que asíno pintamos por defecto todo. Al ejecutar primero el FOR
                     //antes que el if(!yaEsta) da la posibilidad de buscar amtes y poner el estado true al 
                     //boolean de estado, permitiendo que SI NO (!yaEsta) está se pinte la fila entera.
 
@@ -78,13 +77,14 @@ if (contenedorVenta) { //si existe el contenedor.
                     tdCantidad.textContent = actual + 1;
 
                     yaEsta = true;  // Aquí usamos la variable yaesta para controlar la otra opcion de que no esté la linea que necesitamos. marcamos que sí está
-                    break;          // <- salimos del bucle, ya terminamos
+                    break;          // salimos del bucle, ya se ha terminado.
                 }
             }
 
             //Si NO estaba en ninguna fila, creamos la nueva
             if (!yaEsta) { //ponemos el !yaesta despues del for para que por defecto no pinte todo ya que el valor por defecto es false.
                 var nuevaFila = document.createElement('tr');
+                nuevaFila.classList.add('filaVenta');//le añado esta clase para manejar el estilo de las filas
                 nuevaFila.innerHTML =
                     '<td class="datoVenta">1</td>' +
                     '<td class="datoVenta">' + datos[0] + '</td>' +

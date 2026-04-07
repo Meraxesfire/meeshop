@@ -50,6 +50,8 @@ function cargarPantalla(nombre) { //nombre=nombre del archivo que cargará
             document.getElementById('contenido').innerHTML = html;
 
             // Gestión del Script Dinámico porque debe cambiar con cada pantalla para que el navegador no guarde la ejecución de la pantalla anterior
+            //Esto es así por que: El navegador parsea el HTML pero ignora los <script> que vienen en ese contenido. 
+            // Por eso venta.js nunca se ejecuta cuando está incluido como etiqueta en venta.php. debe incluirse aqui
             const scriptID = 'script-pantalla';
             const viejoScript = document.getElementById(scriptID);
             if (viejoScript) viejoScript.remove();

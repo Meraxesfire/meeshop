@@ -534,6 +534,13 @@
     gap: 30px;
 }
 
+#totalVentaCantidad {
+    font-size: 30px;
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 0px 20px;
+    border-radius: 5px;
+}
+
 #botonFinalizarVenta {
     background-color: rgba(219, 145, 0, 0.7);
     border: none;

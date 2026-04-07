@@ -132,6 +132,13 @@ $empleada = $_SESSION['empleada'];
                     <h2 id="totalVenta">TOTAL</h2>
                     <p id="totalVentaCantidad">0,00 €</p>
                 </div>
+                <div id="espacioMetodoDePago">
+                    <input type="radio" name="metodoDePago" value="efectivo">Efectivo</input>
+                    <input type="radio" name="metodoDePago" value="tarjeta">Tarjeta</input>
+                    <input type="radio" name="metodoDePago" value="bizum">Bizum</input>
+                    <input type="radio" name="metodoDePago" value="transferencia">Transferencia</input>
+                    <input type="radio" name="metodoDePago" value="otro">Otro</input>
+                </div>
                 <button id="botonFinalizarVenta">Finalizar venta</button>
             </div>
         </div>

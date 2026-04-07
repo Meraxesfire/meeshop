@@ -119,7 +119,7 @@ function calcularTotalVenta() {
     for (let i = 0; i < filasCarrito.length; i++) { //itera tantas veces como filas tenga la tabla
         let cantidadProducto = filasCarrito[i].querySelectorAll('td')[0]; //cantidad del producto
         let precioProducto = filasCarrito[i].querySelectorAll('td')[6]; //precio del producto
-        total += parseFloat(cantidadProducto.textContent) * parseFloat(precioProducto.textContent.replace(',', '.')); //hago elm replace porque al mstrar mis decimales con "," el parseFloat solo interpreta hasta la ",", necesita "." para entenderlo como float
+        total += parseFloat(cantidadProducto.textContent) * parseFloat(precioProducto.textContent.replace(',', '.')); //hago el replace porque al mostrar mis decimales con "," el parseFloat solo interpreta hasta la "," y necesita "." para entenderlo como float
     }
     document.getElementById('totalVentaCantidad').textContent = total.toFixed(2);
 }

@@ -86,13 +86,13 @@ if (contenedorVenta) { //si existe el contenedor.
                 var nuevaFila = document.createElement('tr');
                 nuevaFila.classList.add('filaVenta');//le añado esta clase para manejar el estilo de las filas
                 nuevaFila.innerHTML =
-                    '<td class="datoVenta">1</td>' +
+                    '<td class="datoVenta" id="cantidadProducto">1</td>' +
                     '<td class="datoVenta">' + datos[0] + '</td>' +
                     '<td class="datoVenta">' + datos[1] + '</td>' +
                     '<td class="datoVenta">' + datos[2] + '</td>' +
                     '<td class="datoVenta">' + datos[3] + '</td>' +
                     '<td class="datoVenta">' + datos[5] + '</td>' +
-                    '<td class="datoVenta">' + datos[6] + '</td>' +
+                    '<td class="datoVenta"id="precioProducto">' + datos[6] + '</td>' +
                     '<td><button class="botonMenos" style="background:#dc3545;border:none;color:white;padding:5px 10px;border-radius:10px;cursor:pointer;">-</button></td>';
                 //El ultimo elemento es un boton que tendrá la función de eliminar la fila.
                 carrito.appendChild(nuevaFila);
@@ -106,4 +106,20 @@ if (contenedorVenta) { //si existe el contenedor.
         }
     });
 
+}
+
+//---------CALCULAR EL TOTAL DE LA VENTA---------
+document.addEventListener('click', function () {
+    calcularTotalVenta();
+});
+function calcularTotalVenta() {
+    let total = 0; //el total empieza en  0
+    let carrito = document.getElementById('cuerpoEspacioVenta');
+    let filasCarrito = carrito.querySelectorAll('tr');
+    for (let i = 0; i < filasCarrito.length; i++) { //itera tantas veces como filas tenga la tabla
+        let cantidadProducto = filasCarrito[i].querySelectorAll('td')[0]; //cantidad del producto
+        let precioProducto = filasCarrito[i].querySelectorAll('td')[6]; //precio del producto
+        total += parseFloat(cantidadProducto.textContent) * parseFloat(precioProducto.textContent.replace(',', '.')); //hago elm replace porque al mstrar mis decimales con "," el parseFloat solo interpreta hasta la ",", necesita "." para entenderlo como float
+    }
+    document.getElementById('totalVentaCantidad').textContent = total.toFixed(2);
 }

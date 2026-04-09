@@ -523,6 +523,7 @@
     width: 40vw;
     padding-left: 35px;
     padding-top: -10px;
+    gap: 10px;
 }
 
 #espacioTotalVenta {
@@ -532,6 +533,7 @@
     align-items: center;
     width: 100%;
     gap: 30px;
+    margin-bottom: -20px;
 }
 
 #totalVentaCantidad {
@@ -549,6 +551,12 @@
     border-radius: 15px;
     font-size: 23px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+#espacioMetodoDePago {
+    display: flex;
+    flex-direction: row;
 }
 
 

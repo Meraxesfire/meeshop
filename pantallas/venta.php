@@ -78,7 +78,7 @@ $empleada = $_SESSION['empleada'];
                             $ivaPorcentaje = isset($row['iva']) ? floatval($row['iva']) : 0;
                             $pvp = $pvo * (1 + ($ivaPorcentaje / 100)); //este pequeño fragmento calcula el iva para el pvp final
                             ?>
-                            <tr class="filaVentas">
+                            <tr class="filaVentas" data-id="<?php echo $row['id']; ?>">
                                 <td class="datoEditableVentas">
                                     <span
                                         class="textoVentas"><?php echo isset($row['EAN']) ? htmlspecialchars($row['EAN']) : '-'; ?></span>

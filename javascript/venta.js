@@ -97,6 +97,14 @@ if (contenedorVenta) { //si existe el contenedor.
                 //El ultimo elemento es un boton que tendrá la función de eliminar la fila.
                 carrito.appendChild(nuevaFila);
             }
+
+            //prueba de funcionamiento de data-id (que está oculto) para mas tarde usarlo como clave para la bdd de la tabla de venta y detalles_venta
+            //--------------------
+            /*if (e.target.classList.contains('botonAnadirProducto')) {
+                const filaCerca = e.target.closest('tr');
+                const idFila = filaCerca.dataset.id;
+                alert("producto con id:" + idFila);
+            }*/
         }
 
         // FUNCION PARA ELIMINAR DEL CARRITO
@@ -123,3 +131,37 @@ function calcularTotalVenta() {
     }
     document.getElementById('totalVentaCantidad').textContent = total.toFixed(2);
 }
+
+//---------BOTON FINALIZAR VENTA --------
+//El boton finalizar venta genera un archivo con el ticket de la venta y lo envia a la bdd
+
+const botonFinalizar = document.getElementById('botonFinalizarVenta');
+
+//1º) enviar datos de la venta a bbdd (tabla ventas y detalles de venta)
+botonFinalizar.addEventListener('click', function () {
+    //--envio a tabla ventas--
+    const filasCarrito = document.querySelectorAll('#cuerpoEspacioVenta tr'); //capturo las filas que haya en el carrito
+    if (filasCarrito.length === 0) { //si no hay nada en carrito
+        alert("No hay productos en el carrito de venta");//avisamos de que no hay anda para enviar
+        return;
+    }
+    //si hay algo en el carrito, se envia a la bdd con un array de todos los TR
+    const productosAEnviar = [];
+    filasCarrito.forEach(fila => { //función flecha para recorrer cada fila con el foreach
+        productosAEnviar.push({//push añade al final de unarray elementos
+            id: fila.dataset.id,//el id oculto de cada fila
+            cantidad: parseInt(fila.querySelector('#cantidadProducto').textContent)
+            //EXTRAIGO ID Y CANTIDAD  SOLO, porque necesito que el precio sea calculado en el back(finalizar_ventas.php)
+            //es decir con el dato de la bbdd por seguridad y que nadie pueda cambiar el resultado con un simple f12
+        });
+    });
+
+    //Ahora verifico que el metodo de pago esté seleccionado
+    const metodoPago = document.querySelector('input[name="metodoDePago"]:checked')
+    if (!metodoPago) {
+        alert("Por favor, selecciona un método de pago.");
+        return;
+    }
+
+
+});

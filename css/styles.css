@@ -483,6 +483,13 @@
 
 .botonAnadirProducto {
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    background-color: #db9100;
+}
+
+.botonAnadirProducto:hover {
+    background-color: rgba(107, 73, 5, 0.7);
+    transform: translateY(-2px);
+    /* Efecto de elevación opcional */
 }
 
 .tituloVenta {
@@ -500,6 +507,15 @@
 
 .filaVenta {
     margin-left: 10px;
+}
+
+.botonMenos {
+    background-color: #dc3545;
+}
+
+.botonMenos:hover {
+    background-color: rgba(107, 73, 5, 0.7);
+    transform: translateY(-2px);
 }
 
 .espacioVenta {
@@ -554,10 +570,22 @@
     margin-top: 10px;
 }
 
+#botonFinalizarVenta:hover {
+    background-color: rgba(97, 15, 41, 0.7);
+    /* Color de fondo al pasar el mouse */
+    border-color: rgba(97, 15, 41, 0.7);
+    transform: translateY(-2px);
+    /* Efecto de elevación opcional */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra opcional */
+}
+
 #espacioMetodoDePago {
     display: flex;
     flex-direction: row;
 }
+
+
 
 
 /*-------------PAGINA ALMACEN-------------*/

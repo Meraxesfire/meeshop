@@ -7,6 +7,11 @@ $resultado = $conn->query($sql_inicial);
 ?>
 <?php
 session_start();
+/*echo "<pre>";
+var_dump($_SESSION['empleada']);
+echo "</pre>";
+die(); // Esto es para probar que está la session y los datos de empleada completos en la sessionS*/
+
 //Si no hay sesión activa, redirige al login:
 if (!isset($_SESSION['empleada'])) {
     header("location:index.php");
@@ -99,7 +104,7 @@ $empleada = $_SESSION['empleada'];
                                 </td>
                                 <td style="padding: 5px; width: 80px;">
                                     <button id="botonSumar" class="botonAnadirProducto"
-                                        style="background-color:rgba(219,145,0,0.7); border:none; color:white; padding:10px 15px; border-radius: 15px; font-size:23px;">+</button>
+                                        style="border:none; color:white; padding:10px 15px; border-radius: 15px; font-size:23px;">+</button>
                                 </td>
                             </tr>
                             <?php

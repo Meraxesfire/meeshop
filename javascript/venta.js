@@ -93,18 +93,19 @@ if (contenedorVenta) { //si existe el contenedor.
                     '<td class="datoVenta">' + datos[3] + '</td>' +
                     '<td class="datoVenta">' + datos[5] + '</td>' +
                     '<td class="datoVenta"id="precioProducto">' + datos[6] + '</td>' +
-                    '<td><button class="botonMenos" style="background:#dc3545;border:none;color:white;padding:5px 10px;border-radius:10px;cursor:pointer;">-</button></td>';
+                    '<td><button class="botonMenos" style="border:none;color:white;padding:5px 10px;border-radius:10px;cursor:pointer;">-</button></td>';
                 //El ultimo elemento es un boton que tendrá la función de eliminar la fila.
                 carrito.appendChild(nuevaFila);
             }
 
             //prueba de funcionamiento de data-id (que está oculto) para mas tarde usarlo como clave para la bdd de la tabla de venta y detalles_venta
             //--------------------
-            /*if (e.target.classList.contains('botonAnadirProducto')) {
+            if (e.target.classList.contains('botonAnadirProducto')) {
                 const filaCerca = e.target.closest('tr');
                 const idFila = filaCerca.dataset.id;
+                nuevaFila.dataset.id = idFila;
                 alert("producto con id:" + idFila);
-            }*/
+            }
         }
 
         // FUNCION PARA ELIMINAR DEL CARRITO
@@ -132,36 +133,75 @@ function calcularTotalVenta() {
     document.getElementById('totalVentaCantidad').textContent = total.toFixed(2);
 }
 
-//---------BOTON FINALIZAR VENTA --------
+//---------BOTON FINALIZAR VENTA ------------------------------------------------------------------------------------
 //El boton finalizar venta genera un archivo con el ticket de la venta y lo envia a la bdd
 
 const botonFinalizar = document.getElementById('botonFinalizarVenta');
 
 //1º) enviar datos de la venta a bbdd (tabla ventas y detalles de venta)
-botonFinalizar.addEventListener('click', function () {
+botonFinalizar.addEventListener('click', async () => {
     //--envio a tabla ventas--
     const filasCarrito = document.querySelectorAll('#cuerpoEspacioVenta tr'); //capturo las filas que haya en el carrito
-    if (filasCarrito.length === 0) { //si no hay nada en carrito
-        alert("No hay productos en el carrito de venta");//avisamos de que no hay anda para enviar
+    //uso queryselectorall para que devuelva una nodelist y poder recorrela con .length
+
+    //Verifico si hay productos en el carrito
+    if (filasCarrito.length === 0) {
+        alert("No hay productos en el carrito de venta");//avisamos de que no hay nada para enviar
         return;
     }
-    //si hay algo en el carrito, se envia a la bdd con un array de todos los TR
-    const productosAEnviar = [];
-    filasCarrito.forEach(fila => { //función flecha para recorrer cada fila con el foreach
-        productosAEnviar.push({//push añade al final de unarray elementos
-            id: fila.dataset.id,//el id oculto de cada fila
-            cantidad: parseInt(fila.querySelector('#cantidadProducto').textContent)
-            //EXTRAIGO ID Y CANTIDAD  SOLO, porque necesito que el precio sea calculado en el back(finalizar_ventas.php)
-            //es decir con el dato de la bbdd por seguridad y que nadie pueda cambiar el resultado con un simple f12
-        });
-    });
 
-    //Ahora verifico que el metodo de pago esté seleccionado
-    const metodoPago = document.querySelector('input[name="metodoDePago"]:checked')
+    //Ahora verifico que el metodo de pago esté seleccionado, aunque no lo voy a guardar, quizas más adelante si lo haga.
+    const metodoPago = document.querySelector('input[name="metodoDePago"]:checked')?.value;
     if (!metodoPago) {
         alert("Por favor, selecciona un método de pago.");
         return;
     }
 
+    const productosParaEnviar = [];
+    //A continuación iteramos con un foreach cada fila para sacar la ID y la cantidad de los productos en carrito.
+    //Es lo unico que saco del JS, ya que el resto de datos los obtengo de la bbdd en el archivo finaliza_ventas.php.
+    filasCarrito.forEach(fila => {
+        productosParaEnviar.push({
+            id: fila.dataset.id, //el dato del dataset que introducimos en este js de modo oculto para poder extraerlo facilmente
+            cantidad: parseInt(fila.querySelector('#cantidadProducto').textContent),
+        });
+    });
+
+    //Ahora ENVÍO CON FETCH los datos de productosParaEnviar a la pantalla finaliza_ventas.php
+    //para que pueda hacer las consultas a la bdd y guardar los datos en las tablas ventas y detalles_venta.
+    //Uso un bucle try, catch para manejar posibles errores.
+    try {
+        //envio los datos de productosParaEnviar a la pantalla finaliza_ventas.php
+        const response = await fetch('pantallas/finalizar_ventas.php', { //fetch inicia una petición de red hacia un endpoint 
+            //devuelve una promesa que se resuelve en el objeto response(respuesta del servidor)
+            //await: pausa la función hasta tener respuesta de servidor
+            method: 'POST',//indica el metodo http que voy a usar
+            headers: { 'Content-Type': 'application/json' }, //indica el tipo de contenido que voy a enviar
+            body: JSON.stringify({ //convierte el objeto JS en una cadena JSON para enviarlo
+                productos: productosParaEnviar, //envio el array de productos
+                metodo: metodoPago //envio el metodo de pago
+            })
+        })
+
+        const data = await response.json(); //convierte la respuesta del servidor en un objeto JS porque primero lo enviamos como JSON 
+        //para que lo entienda el servidor.
+
+        if (data.success) {
+            alert("¡Venta realizada! ID: " + data.idVenta);
+            // Aquí llamarás al PDF más adelante
+            location.reload(); // Por ahora recargamos para limpiar todo
+        } else {
+            alert("Error: " + data.error);
+        }
+
+    } catch (err) {
+        console.error("Error en la comunicación:", err);
+    }
+
+
+    //Este ultimo bloque borra los elementos del carrito para poder realizar una nueva venta al pulsar FINALIZAR VENTA
+    const cuerpoEspacioVenta = document.getElementById('cuerpoEspacioVenta');
+    cuerpoEspacioVenta.innerHTML = '';
+    document.getElementById('totalVentaCantidad').textContent = '0.00';
 
 });

@@ -95,17 +95,12 @@ if (contenedorVenta) { //si existe el contenedor.
                     '<td class="datoVenta"id="precioProducto">' + datos[6] + '</td>' +
                     '<td><button class="botonMenos" style="border:none;color:white;padding:5px 10px;border-radius:10px;cursor:pointer;">-</button></td>';
                 //El ultimo elemento es un boton que tendrá la función de eliminar la fila.
+
+                const idFila = e.target.closest('tr').dataset.id;
+                nuevaFila.dataset.id = idFila;
                 carrito.appendChild(nuevaFila);
             }
 
-            //prueba de funcionamiento de data-id (que está oculto) para mas tarde usarlo como clave para la bdd de la tabla de venta y detalles_venta
-            //--------------------
-            if (e.target.classList.contains('botonAnadirProducto')) {
-                const filaCerca = e.target.closest('tr');
-                const idFila = filaCerca.dataset.id;
-                nuevaFila.dataset.id = idFila;
-                alert("producto con id:" + idFila);
-            }
         }
 
         // FUNCION PARA ELIMINAR DEL CARRITO
@@ -187,8 +182,10 @@ botonFinalizar.addEventListener('click', async () => {
         //para que lo entienda el servidor.
 
         if (data.success) {
-            alert("¡Venta realizada! ID: " + data.idVenta);
-            // Aquí llamarás al PDF más adelante
+            alert("¡Venta realizada! ID: " + data.id_venta);
+            // Aquí abrimos la nueva ventana del ticket
+            let nuevaVentanaTicket = window.open('../pantallas/ticket_venta.php', '_blank');
+
             location.reload(); // Por ahora recargamos para limpiar todo
         } else {
             alert("Error: " + data.error);
@@ -198,10 +195,13 @@ botonFinalizar.addEventListener('click', async () => {
         console.error("Error en la comunicación:", err);
     }
 
-
     //Este ultimo bloque borra los elementos del carrito para poder realizar una nueva venta al pulsar FINALIZAR VENTA
     const cuerpoEspacioVenta = document.getElementById('cuerpoEspacioVenta');
     cuerpoEspacioVenta.innerHTML = '';
     document.getElementById('totalVentaCantidad').textContent = '0.00';
+
+    document.querySelectorAll('#cuerpoEspacioVenta tr').forEach(fila => {
+        console.log('dataset.id:', fila.dataset.id);
+    });
 
 });

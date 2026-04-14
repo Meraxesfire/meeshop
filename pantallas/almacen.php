@@ -1,55 +1,55 @@
-<?php 
+<?php
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED); // Desactiva NOTICE, WARNING y DEPRECATED
 require_once __DIR__ . '/../includes/conexion.php';
 ?>
 <?php
 //AQUI SE CAPTURAN LOS DATOS (VALORES) DEL FORMULARIO DEL ALMACEN: Crea la logica para meter los productos en la bdd a traves del formulario de esta misma pagina almacen.php
-if ($_SERVER['REQUEST_METHOD']==='POST' && !empty($_POST)) {
-        $ean = $_POST['ean'] ??''; // Verifica que existe antes de acceder
-        $nombre = $_POST['nombre'] ?? '';
-        $categoria =$_POST['categoria'] ?? '';
-        $precio = isset($_POST['precio']) ? floatval($_POST['precio']) : 0;
-        $stock_nuevo = isset($_POST['stock']) ? intval($_POST['stock']) : 0;
-        $iva = isset($_POST['iva']) ? floatval($_POST['iva']) : 21;
-        //las variables de arriba recogen los datos del formulario de agregar producto
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
+    $ean = $_POST['ean'] ?? ''; // Verifica que existe antes de acceder
+    $nombre = $_POST['nombre'] ?? '';
+    $categoria = $_POST['categoria'] ?? '';
+    $precio = isset($_POST['precio']) ? floatval($_POST['precio']) : 0;
+    $stock_nuevo = isset($_POST['stock']) ? intval($_POST['stock']) : 0;
+    $iva = isset($_POST['iva']) ? floatval($_POST['iva']) : 21;
+    //las variables de arriba recogen los datos del formulario de agregar producto
 
-        //ahora la consulta para insertar el nuevo producto en la base de datos
-        $sql=" INSERT INTO productos (ean, nombre, categoria, precio, stock, iva) VALUES (?,?,?,?,?,?) 
+    //ahora la consulta para insertar el nuevo producto en la base de datos
+    $sql = " INSERT INTO productos (ean, nombre, categoria, precio, stock, iva) VALUES (?,?,?,?,?,?) 
             ON DUPLICATE KEY UPDATE
             stock = stock + VALUES (stock)";
-        
-        $stmt = $conn->prepare($sql);//no usamos $conn->query($sql) porque es inseguro ya que alguien podría inyectar código malicioso simplemente escribiendo en el formulario una sentencia como DROP TABLE productos;
-            if ($stmt) {
-                $stmt->bind_param("sssdid", $ean, $nombre, $categoria, $precio, $stock_nuevo, $iva);//con bind_param evitamos inyecciones SQL porquen estipulamos los tipos de datos que vamos a recibir en cada campo: s=string, d=double, i=integer. tambien vincula las variables a los marcadores de posición ? del prepare.
-                if ($stmt->execute()) { 
-                    $stmt->close();
-                // IMPORTANTE: Si es una petición AJAX, detenemos la ejecución aquí para que no intente redirigir.
 
-                if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
-                    exit('success');
-                }
-            } 
+    $stmt = $conn->prepare($sql);//no usamos $conn->query($sql) porque es inseguro ya que alguien podría inyectar código malicioso simplemente escribiendo en el formulario una sentencia como DROP TABLE productos;
+    if ($stmt) {
+        $stmt->bind_param("sssdid", $ean, $nombre, $categoria, $precio, $stock_nuevo, $iva);//con bind_param evitamos inyecciones SQL porquen estipulamos los tipos de datos que vamos a recibir en cada campo: s=string, d=double, i=integer. tambien vincula las variables a los marcadores de posición ? del prepare.
+        if ($stmt->execute()) {
+            $stmt->close();
+            // IMPORTANTE: Si es una petición AJAX, detenemos la ejecución aquí para que no intente redirigir.
+
+            if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+                exit('success');
+            }
         }
+    }
 }
-        //para evitar crasheo
-        $sql_inicial = "SELECT * FROM productos";
-        $resultado = $conn->query($sql_inicial); 
+//para evitar crasheo
+$sql_inicial = "SELECT * FROM productos";
+$resultado = $conn->query($sql_inicial);
 
-        // Si la consulta falla por algo, creamos un objeto vacío para que el while no explote
-        if (!$resultado) {
-            $resultado = new stdClass(); 
-        }
+// Si la consulta falla por algo, creamos un objeto vacío para que el while no explote
+if (!$resultado) {
+    $resultado = new stdClass();
+}
 ?>
 
 <?php
 session_start();
 //Si no hay sesión activa, redirige al login:
-if (!isset($_SESSION['empleada'])){
+if (!isset($_SESSION['empleada'])) {
     header("location:index.php");
     exit();
 }
 
-$empleada=$_SESSION['empleada'];
+$empleada = $_SESSION['empleada'];
 ?>
 
 
@@ -57,6 +57,7 @@ $empleada=$_SESSION['empleada'];
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,6 +65,7 @@ $empleada=$_SESSION['empleada'];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://use.typekit.net/tui1luo.css">
 </head>
+
 <body>
     <div>
         <h1 class="titulo">Almacen</h1>
@@ -71,18 +73,22 @@ $empleada=$_SESSION['empleada'];
     <div>
         <div class="espacio3">
             <form id="formDeFiltro">
-            <label for="buscarProducto" class="tituloBuscar">Buscar producto</label>
-            <div id="cajaBusqueda">
-                <input class="caja_busqueda" id="buscarProducto" type="text" name="busquedaInput" placeholder="Nombre del producto"></input>
-                <select class="select_busqueda" id="buscarCategoria" name="busquedaSelect">
-                    <option value="" disabled selected hidden>Elige una categoría de filtro</option> <!--"disabled selected hidden" hace que aparezca como un placeholder-->
-                    <option value="ropa">Ropa</option>
-                    <option value="accesorios">Accesorios</option>
-                    <option value="joyeria">Joyería</option>
-                    <option value="zapatos">Zapatos</option>
-                </select>
-                <button class="botonLupa" id="botonLupa" data-tooltip="Buscar" type="submit"><i class="fa-solid fa-magnifying-glass iconoLupa"></i></button>
-            </div>
+                <label for="buscarProducto" class="tituloBuscar">Buscar producto</label>
+                <div id="cajaBusqueda">
+                    <input class="caja_busqueda" id="buscarProducto" type="text" name="busquedaInput"
+                        placeholder="Nombre del producto"></input>
+                    <select class="select_busqueda" id="buscarCategoria" name="busquedaSelect">
+                        <option value="" disabled selected hidden>Elige una categoría de filtro</option>
+                        <!--"disabled selected hidden" hace que aparezca como un placeholder-->
+                        <option value=""></option>
+                        <option value="ropa">Ropa</option>
+                        <option value="accesorios">Accesorios</option>
+                        <option value="joyeria">Joyería</option>
+                        <option value="zapatos">Zapatos</option>
+                    </select>
+                    <button class="botonLupa" id="botonLupa" data-tooltip="Buscar" type="submit"><i
+                            class="fa-solid fa-magnifying-glass iconoLupa"></i></button>
+                </div>
             </form>
             <div class="tabla_almacen_overflow">
                 <table class="tabla_almacen">
@@ -98,49 +104,50 @@ $empleada=$_SESSION['empleada'];
                         </tr>
                     </thead>
                     <tbody class="cuerpoTabla">
-    <!--A CONTINUACION INSERCION DE DATOS DE BBDD en filas dentro del cuerpo de la tabla, les doy estilo inline para asegurar el ajuste -->
-                    <?php
-                    while($row = $resultado->fetch_assoc()): 
-                    $pvo=isset($row['precio']) ? floatval($row['precio']) :0;
-                    $ivaPorcentaje=isset($row['iva']) ? floatval($row['iva']) : 0;
-                    $pvp = $pvo*(1+ ($ivaPorcentaje/100));         //este pequeño fragmento calcula el iva para el pvp final
-                    ?>
-                    <tr>
-                        <td style="text-align:center;font-size:15px">
-                            <?php echo isset($row['EAN']) ? htmlspecialchars($row['EAN']) : '-'; ?>
-                        </td>
-                        
-                        <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="nombre">
-                            <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <span class="texto-editable"><?php echo htmlspecialchars($row['nombre']); ?></span>
-                        </td>
-                        
-                        <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="categoria">
-                            <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <span class="texto-editable"><?php echo htmlspecialchars($row['categoria']); ?></span>
-                        </td>
-                        
-                        <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="precio">
-                            <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <span class="texto-editable"><?php echo number_format($pvo, 2, '.', ''); ?></span>
-                        </td>
-                        
-                        <td><?php echo $row['stock']; ?></td> 
-                        
-                        <td><?php echo $row['iva']; ?>%</td>
-                        
-                        <td>
-                            <?php echo number_format($pvp, 2, ',', '.') . ' €'; ?>
-                        </td>
-                    </tr>
+                        <!--A CONTINUACION INSERCION DE DATOS DE BBDD en filas dentro del cuerpo de la tabla, les doy estilo inline para asegurar el ajuste -->
+                        <?php
+                        while ($row = $resultado->fetch_assoc()):
+                            $pvo = isset($row['precio']) ? floatval($row['precio']) : 0;
+                            $ivaPorcentaje = isset($row['iva']) ? floatval($row['iva']) : 0;
+                            $pvp = $pvo * (1 + ($ivaPorcentaje / 100));         //este pequeño fragmento calcula el iva para el pvp final
+                            ?>
+                            <tr>
+                                <td style="text-align:center;font-size:15px">
+                                    <?php echo isset($row['EAN']) ? htmlspecialchars($row['EAN']) : '-'; ?>
+                                </td>
+
+                                <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="nombre">
+                                    <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <span class="texto-editable"><?php echo htmlspecialchars($row['nombre']); ?></span>
+                                </td>
+
+                                <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="categoria">
+                                    <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <span class="texto-editable"><?php echo htmlspecialchars($row['categoria']); ?></span>
+                                </td>
+
+                                <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="precio">
+                                    <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <span class="texto-editable"><?php echo number_format($pvo, 2, '.', ''); ?></span>
+                                </td>
+
+                                <td><?php echo $row['stock']; ?></td>
+
+                                <td><?php echo $row['iva']; ?>%</td>
+
+                                <td>
+                                    <?php echo number_format($pvp, 2, ',', '.') . ' €'; ?>
+                                </td>
+                            </tr>
                         <?php endwhile; ?>
                     </tbody>
                 </table>
-            </div>   
+            </div>
         </div>
         <div class="espacio4" style="padding-right:25px;">
             <h2 class="tituloAgregar">Agregar nuevo producto</h2>
-            <form class="formAgregarProducto parent" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST"><!--Envío la información con POST que es el indicado para escritura en la bbdd -->
+            <form class="formAgregarProducto parent" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>"
+                method="POST"><!--Envío la información con POST que es el indicado para escritura en la bbdd -->
                 <input class="entradaAgregar child" type="text" name="ean" placeholder=" EAN" required>
                 <input class="entradaAgregar child" type="text" name="nombre" placeholder=" Nombre del producto">
                 <input class="entradaAgregar child" type="number" step="0.01" name="precio" placeholder=" Precio">
@@ -159,4 +166,5 @@ $empleada=$_SESSION['empleada'];
 
     <script src="javascript/almacen.js"></script>
 </body>
+
 </html>

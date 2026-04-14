@@ -1,0 +1,159 @@
+Array
+(
+    [productos] => Array
+        (
+            [0] => Array
+                (
+                    [id] => 22
+                    [cantidad] => 1
+                )
+
+        )
+
+    [metodo] => efectivo
+)
+
+ID venta generada: 58
+Procesando producto id: 22
+Datos producto: Array
+(
+    [precio] => 14.50
+    [iva] => 
+)
+
+Detalle insertado
+Stock actualizado
+Total actualizado: 14.5
+COMMIT realizado
+ID venta generada: 59
+Procesando producto id: 38
+Datos producto: Array
+(
+    [precio] => 2.00
+    [iva] => 21
+)
+
+Detalle insertado
+Stock actualizado
+Total actualizado: 2.42
+COMMIT realizado
+ID venta generada: 60
+Procesando producto id: 38
+Datos producto: Array
+(
+    [precio] => 2.00
+    [iva] => 21
+)
+
+Detalle insertado
+Stock actualizado
+Total actualizado: 2.42
+COMMIT realizado
+ID venta generada: 61
+Procesando producto id: 38
+Datos producto: Array
+(
+    [precio] => 2.00
+    [iva] => 21
+)
+
+Detalle insertado
+Stock actualizado
+Total actualizado: 2.42
+COMMIT realizado
+ID venta generada: 62
+Procesando producto id: 38
+Datos producto: Array
+(
+    [precio] => 2.00
+    [iva] => 21
+)
+
+Detalle insertado
+Stock actualizado
+Total actualizado: 2.42
+COMMIT realizado
+ID venta generada: 63
+Procesando producto id: 38
+Datos producto: Array
+(
+    [precio] => 2.00
+    [iva] => 21
+)
+
+Detalle insertado
+Stock actualizado
+Total actualizado: 2.42
+COMMIT realizado
+ID venta generada: 64
+Procesando producto id: 38
+Datos producto: Array
+(
+    [precio] => 2.00
+    [iva] => 21
+)
+
+Detalle insertado
+Stock actualizado
+Total actualizado: 2.42
+COMMIT realizado
+ID venta generada: 65
+Procesando producto id: 38
+Datos producto: Array
+(
+    [precio] => 2.00
+    [iva] => 21
+)
+
+Detalle insertado
+Stock actualizado
+Total actualizado: 2.42
+COMMIT realizado
+ID venta generada: 66
+Procesando producto id: 38
+Datos producto: Array
+(
+    [precio] => 2.00
+    [iva] => 21
+)
+
+Detalle insertado
+Stock actualizado
+Total actualizado: 2.42
+COMMIT realizado
+ID venta generada: 67
+Procesando producto id: 38
+Datos producto: Array
+(
+    [precio] => 2.00
+    [iva] => 21
+)
+
+Detalle insertado
+Stock actualizado
+Total actualizado: 2.42
+COMMIT realizado
+ID venta generada: 68
+Procesando producto id: 38
+Datos producto: Array
+(
+    [precio] => 2.00
+    [iva] => 21
+)
+
+Detalle insertado
+Stock actualizado
+Total actualizado: 4.84
+COMMIT realizado
+ID venta generada: 69
+Procesando producto id: 38
+Datos producto: Array
+(
+    [precio] => 2.00
+    [iva] => 21
+)
+
+Detalle insertado
+Stock actualizado
+Total actualizado: 2.42
+COMMIT realizado

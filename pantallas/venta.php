@@ -50,6 +50,7 @@ $empleada = $_SESSION['empleada'];
                         <select class="select_busqueda" id="buscarCategoria" name="busquedaSelect">
                             <option value="" disabled selected hidden>Elige una categoría de filtro</option>
                             <!--"disabled selected hidden" hace que aparezca como un placeholder-->
+                            <option value=""></option>
                             <option value="ropa">Ropa</option>
                             <option value="accesorios">Accesorios</option>
                             <option value="joyeria">Joyería</option>

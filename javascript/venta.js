@@ -182,10 +182,8 @@ botonFinalizar.addEventListener('click', async () => {
         //para que lo entienda el servidor.
 
         if (data.success) {
-            alert("¡Venta realizada! ID: " + data.id_venta);
-            // Aquí abrimos la nueva ventana del ticket
-            let nuevaVentanaTicket = window.open('../pantallas/ticket_venta.php', '_blank');
-
+            // Aquí abrimos la nueva ventana del ticket 
+            window.open('pantallas/ticket_venta.php?idVenta=' + data.id_venta, '_blank');
             location.reload(); // Por ahora recargamos para limpiar todo
         } else {
             alert("Error: " + data.error);

@@ -25,25 +25,22 @@ $conn->begin_transaction();
 //CALCULO DE TOTALES y preparar la cabecera
 try {
     $totalCalculado = 0;
-    $sqlVenta = "INSERT INTO ventas (id_empleada, total) VALUES (?, ?)";
+    $sqlVenta = "INSERT INTO ventas (id_empleada, total) VALUES (?, ?)"; //consulta para tabla ventas
     $stmt = $conn->prepare($sqlVenta);
     $stmt->bind_param("id", $id_empleada, $totalCalculado);
     $stmt->execute();
 
     $idVentaGenerada = $conn->insert_id;
-    file_put_contents(__DIR__ . '/debug_venta.txt', "\nID venta generada: " . $idVentaGenerada, FILE_APPEND);
 
-    $sqlDetalle = "INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, subtotal) VALUES (?, ?, ?, ?)";
+    $sqlDetalle = "INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, subtotal) VALUES (?, ?, ?, ?)";//consulta para tabla detalles
     $stmtDetalle = $conn->prepare($sqlDetalle);
 
     foreach ($productos as $producto) {
         $id_producto = $producto['id'];
         $cantidadDetalle = $producto['cantidad'];
-        file_put_contents(__DIR__ . '/debug_venta.txt', "\nProcesando producto id: " . $id_producto, FILE_APPEND);
 
         $res = $conn->query("SELECT precio, iva FROM productos WHERE id = $id_producto");
         $p = $res->fetch_assoc();
-        file_put_contents(__DIR__ . '/debug_venta.txt', "\nDatos producto: " . print_r($p, true), FILE_APPEND);
 
         $ivaVal = $p['iva'] ?? 0;
         $pvpDetalle = $p['precio'] * (1 + ($ivaVal / 100));
@@ -52,28 +49,23 @@ try {
 
         $stmtDetalle->bind_param("iiid", $idVentaGenerada, $id_producto, $cantidadDetalle, $subtotalDetalle);
         $stmtDetalle->execute();
-        file_put_contents(__DIR__ . '/debug_venta.txt', "\nDetalle insertado", FILE_APPEND);
 
         $sqlStock = "UPDATE productos SET stock = stock - ? WHERE id = ?";
         $stmtStock = $conn->prepare($sqlStock);
         $stmtStock->bind_param("ii", $cantidadDetalle, $id_producto);
         $stmtStock->execute();
-        file_put_contents(__DIR__ . '/debug_venta.txt', "\nStock actualizado", FILE_APPEND);
     }
 
     $sqlUpdateTotal = "UPDATE ventas SET total = ? WHERE id = ?";
     $stmtTotal = $conn->prepare($sqlUpdateTotal);
     $stmtTotal->bind_param("di", $totalCalculado, $idVentaGenerada);
     $stmtTotal->execute();
-    file_put_contents(__DIR__ . '/debug_venta.txt', "\nTotal actualizado: " . $totalCalculado, FILE_APPEND);
 
     $conn->commit();
-    file_put_contents(__DIR__ . '/debug_venta.txt', "\nCOMMIT realizado", FILE_APPEND);
     echo json_encode(["success" => true, "id_venta" => $idVentaGenerada]);
 
 } catch (Exception $e) {
-    $conn->rollback();
-    file_put_contents(__DIR__ . '/debug_venta.txt', "\nERROR: " . $e->getMessage(), FILE_APPEND);
+    $conn->rollback();//esto crea un archivo en la carpeta pantllas que es un debug, va a ir explicando si funciona o no el bloque try y sino en qué dato está fallando
     echo json_encode(["success" => false, "error" => $e->getMessage()]);
 }
 

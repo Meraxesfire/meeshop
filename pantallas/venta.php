@@ -43,7 +43,7 @@ $empleada = $_SESSION['empleada'];
                     <p class="tituloBuscar">Buscar producto</p>
                     <div class="contenedorInputLupa">
                         <input class="caja_busqueda" name="busquedaInput" placeholder="Nombre del producto"></input>
-                        <button class="botonLupa" id="botonLupa" data-tooltip="Buscar" type="submit"><i
+                        <button class="botonLupa" id="botonLupaVenta1" data-tooltip="Buscar" type="submit"><i
                                 class="fa-solid fa-magnifying-glass iconoLupa"></i></button>
                     </div>
                     <div class="sectorFiltroVentas">
@@ -56,7 +56,7 @@ $empleada = $_SESSION['empleada'];
                             <option value="joyeria">Joyería</option>
                             <option value="zapatos">Zapatos</option>
                         </select>
-                        <button class="botonLupa" id="botonLupa" data-tooltip="Buscar" type="submit"><i
+                        <button class="botonLupa" id="botonLupaVenta2" data-tooltip="Buscar" type="submit"><i
                                 class="fa-solid fa-magnifying-glass iconoLupa"></i></button>
                     </div>
                 </div>

@@ -86,7 +86,7 @@ $empleada = $_SESSION['empleada'];
                         <option value="joyeria">Joyería</option>
                         <option value="zapatos">Zapatos</option>
                     </select>
-                    <button class="botonLupa" id="botonLupa" data-tooltip="Buscar" type="submit"><i
+                    <button class="botonLupa" id="botonLupaAlmacen" data-tooltip="Buscar" type="submit"><i
                             class="fa-solid fa-magnifying-glass iconoLupa"></i></button>
                 </div>
             </form>

@@ -1,3 +1,22 @@
+<?php
+//conexion con la bbdd
+require_once __DIR__ . '/../includes/conexion.php';
+$sql = "SELECT 
+            v.id AS id_venta,
+            v.fecha,
+            p.nombre AS producto,
+            p.iva,
+            e.nombre AS empleada,
+            v.total
+        FROM ventas v
+        JOIN detalle_ventas dv ON v.id = dv.id_venta
+        JOIN productos p ON dv.id_producto = p.id
+        JOIN empleadas e ON v.id_empleada = e.id";
+$resultado = $conn->query($sql);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -11,7 +30,7 @@
 </head>
 
 <body>
-    <h1 class="titulo">Informes</h1>
+    <h1 class="titulo">Informes de venta</h1>
     <div id="espacioInformes">
         <h2 class="tituloFiltro">Filtros</h2>
         <form method="post" class="formularioInformes"> <!-- TODO: CAMBIAR EL ACTION -->
@@ -39,12 +58,24 @@
                     <th class="titulosTablaInformes">ID de venta</th>
                     <th class="titulosTablaInformes">Fecha</th>
                     <th class="titulosTablaInformes">Productos</th>
-                    <th class="titulosTablaInformes">IVA</th>
                     <th class="titulosTablaInformes">Empleada</th>
                     <th class="titulosTablaInformes">Total</th>
+
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="cuerpoTablaInformes">
+                <?php
+                while ($row = $resultado->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . $row['id_venta'] . "</td>";
+                    echo "<td>" . $row['fecha'] . "</td>";
+                    echo "<td>" . $row['producto'] . "</td>";
+                    echo "<td>" . $row['empleada'] . "</td>";
+                    echo "<td>" . $row['total'] . "</td>";
+
+                    echo "</tr>";
+                }
+                ?>
 
             </tbody>
         </table>

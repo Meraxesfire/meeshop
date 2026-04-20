@@ -1,7 +1,7 @@
 //------------------------------------LOGICA PARA PANTALLA VENTAS.PHP-------------------------
 
-//LOGICA DE FILTRO DE INFO en la tabla de productos disponibles:
-//primero buscamos el archivo que contiene el codigo de filtrado y la tabla donde se va a volcar todo
+//LOGICA DE FILTRO DE INFO en la tabla de p roductos disponibles:
+//primero buscamos el archivo que contiene el codigo de filtrado y la ta bla donde se va a volcar todo
 document.getElementById('formDeFiltroVenta').addEventListener('submit', function (e) {
     if (e.target && e.target.id === 'formDeFiltroVenta') {
         e.preventDefault();

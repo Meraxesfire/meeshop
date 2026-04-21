@@ -134,8 +134,9 @@ function calcularTotalVenta() {
 const botonFinalizar = document.getElementById('botonFinalizarVenta');
 
 //1º) enviar datos de la venta a bbdd (tabla ventas y detalles de venta)
-botonFinalizar.addEventListener('click', async () => {
-    //--envio a tabla ventas--
+document.addEventListener('click', async (e) => { //AQUI TUVE QUE CAMBIAR un escuchador del boton por un escuchador del evento ya que al salir y entrar en la pantalla, ese milisegundo que tarda en cargar el contenido hacia que no activase el evento al boton finalizar.
+    if (e.target.id !== 'botonFinalizarVenta') return;
+    //envio a tabla ventas
     const filasCarrito = document.querySelectorAll('#cuerpoEspacioVenta tr'); //capturo las filas que haya en el carrito
     //uso queryselectorall para que devuelva una nodelist y poder recorrela con .length
 

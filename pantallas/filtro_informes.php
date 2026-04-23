@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../includes/conexion.php";
+
 //p y v son como alias para los elementos.
 $sql = "SELECT 
             v.id AS id_venta, 

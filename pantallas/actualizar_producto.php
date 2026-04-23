@@ -3,12 +3,12 @@
 //conexion a la bbdd
 require_once __DIR__ . '/../includes/conexion.php'; //uso la conexion a la bbdd ya picada en conexion.php
 
-$id =$_POST ['id'] ?? 0; 
+$id = $_POST['id'] ?? 0;
 $columna = $_POST['columna'] ?? '';
 $valor = $_POST['valor'] ?? '';
 
 //whitelist de columnas permitidas por seguridad
-$columnasPermitidas = ['nombre', 'categoria', 'precio','iva'];
+$columnasPermitidas = ['nombre', 'categoria', 'precio', 'iva'];
 
 if (in_array($columna, $columnasPermitidas) && $id > 0) {
     $sql = "UPDATE productos SET $columna = ? WHERE id = ?";

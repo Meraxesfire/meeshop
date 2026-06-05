@@ -24,14 +24,14 @@ require_once __DIR__ . '/../includes/conexion.php';
         <div class="sectorConfiguracion">
             <div class="contenedor-formulario">
                 <h2>Registrar Nueva Empleada</h2>
-                <form action="/meeshop/pantallas/nueva_empleada.php" method="POST">
+                <form action="/meeshop/pantallas/nueva_empleada.php" method="POST" autocomplete="off"> <!--Se añade autocompelte="off" para evitar que gestores de constraseña o navegador rellenen por defecto campos.-->
                     <label class="labelFormulario">Nombre Completo:</label>
-                    <input class="inputNuevaEmpleada" type="text" name="nombre" required placeholder="Ej: Lucia Gomez">
+                    <input class="inputNuevaEmpleada" type="text" name="nombre" required placeholder="Ej: Lucia Gomez" autocomplete="name">
                     <label class="labelFormulario">Nombre de Usuario:</label>
-                    <input class="inputNuevaEmpleada" type="text" name="usuario_nuevo" required
-                        placeholder="Ej: LuciaG">
+                    <input class="inputNuevaEmpleada" type="text" name="usuario_nuevo" required placeholder="Ej: LuciaG" autocomplete="off">
+                    <br>
                     <label class="labelFormulario">Contraseña:</label>
-                    <input class="inputNuevaEmpleada" type="password" name="pass_nueva" required>
+                    <input class="inputNuevaEmpleada" type="password" name="pass_nueva" required autocomplete="new-password">
 
                     <button type="submit" class="btn-guardar">Dar de Alta</button>
                 </form>

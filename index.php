@@ -12,7 +12,7 @@ header("Expires: 0");
 ?>
 
 <?php
-$conexion = new mysqli("localhost", "root", "", "meeshop");
+$conexion = new mysqli("localhost", "root", "", "meeshop_test");
 if ($conexion->connect_error) {
     die("Error de conexión: " . $conexion->connect_error);
 }

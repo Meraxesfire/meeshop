@@ -16,24 +16,10 @@ $resultado = $conn->query($sql);
 
 ?>
 
-
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>informes</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://use.typekit.net/tui1luo.css">
-</head>
-
-<body>
-    <h1 class="titulo">Informes de venta</h1>
-    <div id="espacioInformes">
-        <h2 class="tituloFiltro">Filtros</h2>
-        <form method="post" class="formularioInformes"> <!-- TODO: CAMBIAR EL ACTION -->
+<h1 class="titulo">Informes de venta</h1>
+<div id="espacioInformes">
+    <h2 class="tituloFiltro">Filtros</h2>
+        <form method="post" action="#" class="formularioInformes">
             <div class="contenedorFiltrosInformes">
                 <div class="filtro_fecha">
                     <label for="fechaInicio">Fecha Inicio:</label>
@@ -46,7 +32,7 @@ $resultado = $conn->query($sql);
                     <input type="number" id="ean" name="ean" class="caja_busqueda_informes">
                 </div>
                 <button style="margin-bottom:40px;" class="botonLupa" id="botonLupaInformes" data-tooltip="Buscar"
-                    type="submit">
+                    type="button">
                     <i class="fa-solid fa-magnifying-glass iconoLupa"></i>
                 </button>
 
@@ -80,6 +66,3 @@ $resultado = $conn->query($sql);
             </tbody>
         </table>
     </div>
-</body>
-
-</html>

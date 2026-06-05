@@ -3,27 +3,43 @@
 
 //CREACION de FILTROS DE BUSQUEDA DE INFORMES
 
-const botonLupaInformes = document.getElementById("botonLupaInformes");
+const botonLupa = document.getElementById("botonLupaInformes");
+const formulario = document.querySelector(".formularioInformes");
 
-botonLupaInformes.addEventListener("click", function (e) {
-    e.preventDefault();
+if (!botonLupa) {
+    console.error("No se encontró el botón botonLupaInformes");
+} else if (!formulario) {
+    console.error("No se encontró el formulario");
+} else {
+    botonLupa.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("Botón lupa clickeado");
 
-    const formulario = e.target.closest("form");//busca el formulario mas cercano al elemento que disparó el evento para no poner dos eventos al mismo elemento.
-    const datos = new FormData(formulario); //el objeto formData almacena el contenido del formulario.
+        const datos = new FormData(formulario);
 
-    //Función fetch para aplicar los filtros a la tabla de informes y agregar html en la tabla sin recargar toda la pagina
-    fetch('/meeshop/pantallas/filtro_informes.php', {
-        method: 'POST',
-        body: datos
-    })
-        .then(res => res.text())
-        .then(html => {
-            const tabla = document.querySelector(".cuerpoTablaInformes");
-            if (tabla) {
-                tabla.innerHTML = html;
-            } else {
-                console.error("No se encontró .cuerpoTablaInformes");
-            }
+        //Función fetch para aplicar los filtros a la tabla de informes y agregar html en la tabla sin recargar toda la pagina
+        fetch('pantallas/filtro_informes.php', {
+            method: 'POST',
+            body: datos
         })
-        .catch(err => console.error('Error', err));
-})
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.text();
+            })
+            .then(html => {
+                const tabla = document.querySelector(".cuerpoTablaInformes");
+                if (tabla) {
+                    tabla.innerHTML = html;
+                    console.log("Tabla actualizada");
+                } else {
+                    console.error("No se encontró .cuerpoTablaInformes");
+                }
+            })
+            .catch(err => console.error('Error en fetch:', err));
+        
+        return false;
+    });
+}

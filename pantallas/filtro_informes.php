@@ -18,11 +18,12 @@ $sql = "SELECT
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($_POST['fechaInicio'])) {
         $fechaInicio = $conn->real_escape_string($_POST['fechaInicio']);
-        $sql .= " AND DATE(v.fecha) >= '$fechaInicio'";
+        $sql .= " AND v.fecha >= DATE_FORMAT('$fechaInicio', '%Y-%m-%d')";
     }
     if (!empty($_POST['fechaFin'])) {
         $fechaFin = $conn->real_escape_string($_POST['fechaFin']);
-        $sql .= " AND DATE(v.fecha) <= '$fechaFin'";
+        // Agregar 1 día para incluir todo el día final
+        $sql .= " AND v.fecha < DATE_ADD(DATE('$fechaFin'), INTERVAL 1 DAY)";
     }
     if (!empty($_POST['ean'])) {
         $ean = $conn->real_escape_string($_POST['ean']);
@@ -32,6 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 //Ejecución de la consulta concatenada:
 $resultado = $conn->query($sql);
+
+// Verificar si hay errores en la consulta
+if (!$resultado) {
+    echo "Error en la consulta: " . $conn->error;
+    exit;
+}
 
 if ($resultado->num_rows > 0) {
     while ($row = $resultado->fetch_assoc()) {

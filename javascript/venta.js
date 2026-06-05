@@ -117,8 +117,14 @@ document.addEventListener('click', function () {
     calcularTotalVenta();
 });
 function calcularTotalVenta() {
-    let total = 0; //el total empieza en  0
     let carrito = document.getElementById('cuerpoEspacioVenta');
+    
+    // Si no existe el elemento, significa que no estamos en la pantalla de venta
+    if (!carrito) {
+        return;
+    }
+    
+    let total = 0; //el total empieza en  0
     let filasCarrito = carrito.querySelectorAll('tr');
     for (let i = 0; i < filasCarrito.length; i++) { //itera tantas veces como filas tenga la tabla
         let cantidadProducto = filasCarrito[i].querySelectorAll('td')[0]; //cantidad del producto

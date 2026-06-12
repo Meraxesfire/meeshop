@@ -22,7 +22,7 @@ $resultado = $conn->query($sql);
         <form method="post" action="#" class="formularioInformes">
             <div class="contenedorFiltrosInformes">
                 <div class="filtro_fecha">
-                    <label for="fechaInicio">Fecha Inicio:</label>
+                    <label for="fechaInicio">Fecha Inicio:</label> 
                     <input type="date" id="fechaInicio" name="fechaInicio" class="caja_busqueda_informes">
                     <label for="fechaFin">Fecha Fin:</label>
                     <input type="date" id="fechaFin" name="fechaFin" class="caja_busqueda_informes">

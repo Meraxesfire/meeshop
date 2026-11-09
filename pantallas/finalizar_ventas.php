@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/conexion.php';
+meeshop_require_write_access();
 
 session_start();
 

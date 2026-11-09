@@ -912,3 +912,12 @@
 .btn-guardar:hover {
     background-color: #b37700;
 }
+.aviso-demo {
+    margin: 12px auto;
+    padding: 10px 14px;
+    border: 1px solid #d6bd82;
+    border-radius: 8px;
+    background: #fff8e6;
+    color: #59451a;
+    text-align: center;
+}

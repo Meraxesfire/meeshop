@@ -145,7 +145,11 @@ $empleada = $_SESSION['empleada'];
                     <input type="radio" name="metodoDePago" value="transferencia">Transferencia</input>
                     <input type="radio" name="metodoDePago" value="otro">Otro</input>
                 </div>
+                <?php if ($demoSoloLectura): ?>
+                    <p class="aviso-demo">Modo demostración: no se registran ventas ni se modifica el stock.</p>
+                <?php else: ?>
                 <button id="botonFinalizarVenta">Finalizar venta</button>
+                <?php endif; ?>
             </div>
         </div>
 </body>

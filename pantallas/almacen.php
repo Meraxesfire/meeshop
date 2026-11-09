@@ -5,6 +5,8 @@ require_once __DIR__ . '/../includes/conexion.php';
 <?php
 //AQUI SE CAPTURAN LOS DATOS (VALORES) DEL FORMULARIO DEL ALMACEN: Crea la logica para meter los productos en la bdd a traves del formulario de esta misma pagina almacen.php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
+    meeshop_require_write_access();
+
     $ean = $_POST['ean'] ?? ''; // Verifica que existe antes de acceder
     $nombre = $_POST['nombre'] ?? '';
     $categoria = $_POST['categoria'] ?? '';
@@ -117,17 +119,23 @@ $empleada = $_SESSION['empleada'];
                                 </td>
 
                                 <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="nombre">
+                                    <?php if (!$demoSoloLectura): ?>
                                     <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <?php endif; ?>
                                     <span class="texto-editable"><?php echo htmlspecialchars($row['nombre']); ?></span>
                                 </td>
 
                                 <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="categoria">
+                                    <?php if (!$demoSoloLectura): ?>
                                     <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <?php endif; ?>
                                     <span class="texto-editable"><?php echo htmlspecialchars($row['categoria']); ?></span>
                                 </td>
 
                                 <td class="datoEditable" data-id="<?php echo $row['id']; ?>" data-columna="precio">
+                                    <?php if (!$demoSoloLectura): ?>
                                     <button class="botonEditar"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <?php endif; ?>
                                     <span class="texto-editable"><?php echo number_format($pvo, 2, '.', ''); ?></span>
                                 </td>
 
@@ -144,6 +152,9 @@ $empleada = $_SESSION['empleada'];
                 </table>
             </div>
         </div>
+        <?php if ($demoSoloLectura): ?>
+            <p class="aviso-demo">La edición del inventario está desactivada en esta demo.</p>
+        <?php else: ?>
         <div class="espacio4" style="padding-right:25px;">
             <h2 class="tituloAgregar">Agregar nuevo producto</h2>
             <form class="formAgregarProducto parent" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>"
@@ -162,6 +173,7 @@ $empleada = $_SESSION['empleada'];
                 <button class="submitAgregar child" type="submit">Agregar producto</button>
             </form>
         </div>
+        <?php endif; ?>
     </div>
 
     <script src="javascript/almacen.js"></script>

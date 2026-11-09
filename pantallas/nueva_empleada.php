@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../includes/conexion.php';
+meeshop_require_write_access();
 session_start();
+$basePath = rtrim(dirname(dirname($_SERVER['SCRIPT_NAME'])), '/\\');
 
 $user = $_POST['usuario_nuevo'] ?? '';
 $pass = $_POST['pass_nueva'] ?? '';
@@ -28,7 +30,7 @@ if ($resultado->num_rows > 0) {
 
     if ($insert->execute()) {
         // Ahora se redirige a la pantalla que quiera, para así confirmar y volver a empezar.
-        header("Location: /meeshop/dashboard.php");
+        header('Location: ' . $basePath . '/dashboard.php');
     } else {
         echo "Error al insertar: " . $conn->error;
     }

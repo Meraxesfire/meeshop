@@ -2,6 +2,7 @@
 
 //conexion a la bbdd
 require_once __DIR__ . '/../includes/conexion.php'; //uso la conexion a la bbdd ya picada en conexion.php
+meeshop_require_write_access();
 
 $id = $_POST['id'] ?? 0;
 $columna = $_POST['columna'] ?? '';

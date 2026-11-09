@@ -12,12 +12,9 @@ header("Expires: 0");
 ?>
 
 <?php
-$conexion = new mysqli("localhost", "root", "", "meeshop_test");
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-}
+require_once __DIR__ . '/includes/conexion.php';
 
-$resultado = $conexion->query("SELECT nombre FROM empresa WHERE id = 1");
+$resultado = $conn->query("SELECT nombre FROM empresa WHERE id = 1");
 $empresa = $resultado->fetch_assoc();
 ?>
 
@@ -42,6 +39,9 @@ if (session_status() === PHP_SESSION_NONE) {
 
             <img class="logo_login" src="images/logo_cropped_final.png">
             <p class="mensaje_empresa">Hola de nuevo, <?php echo htmlspecialchars($empresa['nombre']); ?></p>
+            <?php if ($demoSoloLectura): ?>
+                <p class="aviso-demo">Demo pública · Solo lectura · Usuario: <strong>demo</strong> · Contraseña: <strong>meeshop-demo</strong></p>
+            <?php endif; ?>
             <form class="formulario" action="login.php" method="POST"> <!--cuando se pulsa el submit envía los datos al archivo /login.php-->
                 <input class="entrada" type="text" name="usuario" placeholder=" usuario" required><br>
                 <input class="entrada" type="password" name="contraseña" placeholder=" contraseña" required><br>

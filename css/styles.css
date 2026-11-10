@@ -921,3 +921,27 @@
     color: #59451a;
     text-align: center;
 }
+
+.inputNuevaEmpleada:disabled,
+.btn-guardar:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.enlace-ticket-demo {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    border-radius: 15px;
+    background-color: rgba(219, 145, 0, 0.7);
+    color: #fff;
+    font-size: 18px;
+    text-decoration: none;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.enlace-ticket-demo:hover {
+    background-color: rgba(97, 15, 41, 0.7);
+    transform: translateY(-2px);
+}

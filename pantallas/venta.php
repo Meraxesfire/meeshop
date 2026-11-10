@@ -147,6 +147,7 @@ $empleada = $_SESSION['empleada'];
                 </div>
                 <?php if ($demoSoloLectura): ?>
                     <p class="aviso-demo">Modo demostración: no se registran ventas ni se modifica el stock.</p>
+                    <a class="enlace-ticket-demo" href="pantallas/ticket_venta.php?idVenta=1" target="_blank" rel="noopener">Ver ticket de ejemplo</a>
                 <?php else: ?>
                 <button id="botonFinalizarVenta">Finalizar venta</button>
                 <?php endif; ?>
